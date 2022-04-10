@@ -10,7 +10,7 @@ const state = {
       lastName: null,
       position: undefined,
       description: null,
-      profilPictureUrl: null,
+      profilePictureURL: null,
     },
   },
 };
@@ -38,8 +38,8 @@ const mutations = {
   set_user_id(state, id) {
     state.user._id = id;
   },
-  set_user_profile(state, profile) {
-    state.user.profile = { ...profile };
+  set_user_profile(state, data) {
+    state.user.profile = { ...data };
   },
   set_profile_status(state, payload) {
     state.user.profileFilled = payload;
@@ -53,7 +53,7 @@ const mutations = {
         lastName: null,
         position: null,
         description: null,
-        profilPictureUrl: null,
+        profilePictureURL: null,
       },
     };
   },
@@ -84,7 +84,7 @@ const actions = {
             if (res.data.profile.firstName) {
               // Set user profile
               dispatch("change_profile_status", true);
-              commit("set_user_profile", res.data);
+              commit("set_user_profile", res.data.profile);
               router.push({ name: "home" });
             } else {
               dispatch("change_profile_status", false);

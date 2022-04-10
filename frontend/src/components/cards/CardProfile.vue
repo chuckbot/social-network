@@ -2,7 +2,6 @@
   <div id="cardprofile">
     <div id="picture-ctn">
       <img :src="profilePicURL" alt="Profile Picture" />
-      <!-- {{ profilePicURL }} -->
     </div>
     <div id="firstname-ctn">
       <span id="firstName">{{ firstName }}</span>

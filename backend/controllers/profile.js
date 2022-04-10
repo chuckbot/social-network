@@ -30,7 +30,7 @@ exports.updateProfile = (req, res, next) => {
         ? {
             // Modifiable en fonction du JS frontend
             ...req.body,
-            profilPictureURL: `/back/images/${req.file.filename}`,
+            profilePictureURL: `/back/images/${req.file.filename}`,
           }
         : req.body;
       db.Profile.update(

@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const state = {
   posts: null,
   post: null,
@@ -25,6 +24,7 @@ const actions = {
     axios
       .get("/posts")
       .then((res) => {
+        console.log(res.data.posts[0]);
         commit("set_local_posts", res.data.posts);
       })
       .catch((error) => {
@@ -43,7 +43,6 @@ const actions = {
       });
   },
 };
-
 export default {
   state,
   getters,

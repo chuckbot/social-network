@@ -17,7 +17,6 @@
       <a href @click.prevent="goToPost()">
         <div id="post-img-ctn">
           <img :src="imgUrl" alt />
-          <!-- <img src="../../assets/user-solid.svg" width="20" /> -->
         </div>
         <div>
           <div id="title-post-ctn">{{ title }}</div>
@@ -87,9 +86,11 @@ export default {
   border: 2px solid black;
   margin-bottom: 2px;
 }
+
 .card-post__creator-infos {
   border: 1px solid green;
 }
+
 .card-post__post-infos {
   border: 1px solid red;
 }

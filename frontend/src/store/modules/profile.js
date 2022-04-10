@@ -1,28 +1,24 @@
 import axios from "axios";
-
 const state = {
   updateProfile: false,
 };
-
 const getters = {
   get_update_status(state) {
     return state.updateProfile;
   },
 };
-
 const mutations = {
   set_update_status(state) {
     state.updateProfile = !state.updateProfile;
   },
 };
-
 const actions = {
   commit_update_status({ commit }) {
     commit("set_update_status");
   },
   update_profile({ commit, dispatch }, data) {
     const formData = new FormData();
-    if (data.form.file) {
+    if (data.form.image) {
       formData.append("image", data.form.image);
     }
     formData.append("firstName", data.form.firstName);
@@ -39,7 +35,8 @@ const actions = {
         axios
           .get(`users/${data.userId}`)
           .then((res) => {
-            commit("set_user_profile", res.data);
+            console.log(res.data.profile);
+            commit("set_user_profile", res.data.profile);
             dispatch("change_profile_status", true);
             commit("set_update_status");
           })
@@ -63,5 +60,4 @@ const actions = {
       });
   },
 };
-
 export default { state, getters, mutations, actions };
