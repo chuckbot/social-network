@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+
+const commentCtrl = require("../controllers/comment");
+
+router.get("/:postId", commentCtrl.getAllCommentForPost);
+router.post("/:postId", commentCtrl.createCommentForPost);
+router.put("/:postId", commentCtrl.modifyCommentForPost);
+router.delete("/:postId", commentCtrl.deleteCommentForPost);
+
+module.exports = router;
