@@ -46,7 +46,7 @@ const validateName = (name) => {
  * @returns { Boolean }
  */
 const validateDescription = (description) => {
-  return description.length <= 50 ? true : false;
+  return description.length <= 50 ? false : true;
 };
 
 /**
@@ -98,6 +98,25 @@ const validateProfileForm = (formValidators, form) => {
   }
 };
 
+/**
+ * Check if post form is valid.
+ * @param { Object } formValidators
+ * @param { Object } form
+ * @returns { Boolean }
+ */
+const validatePostForm = (formValidators, form) => {
+  if (
+    Object.values(formValidators).every((value) => value === false) &&
+    form.title !== "" &&
+    form.type !== "" &&
+    form.text !== ""
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 module.exports = {
   validateDescription,
   validateEmail,
@@ -107,4 +126,5 @@ module.exports = {
   validatePasswordConf,
   validateForm,
   validateProfileForm,
+  validatePostForm,
 };

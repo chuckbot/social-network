@@ -24,7 +24,6 @@ const actions = {
     axios
       .get("/posts")
       .then((res) => {
-        console.log(res.data.posts[0]);
         commit("set_local_posts", res.data.posts);
       })
       .catch((error) => {
@@ -41,6 +40,26 @@ const actions = {
       .catch((error) => {
         console.log(error);
       });
+  },
+  create_post(form) {
+    console.log(form);
+    // const formData = new FormData();
+    // if (form.image) {
+    //   formData.append('image', form.image);
+    // }
+    // formData.append('title', form.title);
+    // formData.append('type', form.type);
+    // formData.append('text', form.text);
+    // formData.append('isImportant', form.isImportant);
+    // console.log(formData);
+    // axios
+    //   .post('/posts', formData)
+    //   .then(() => {
+    //     this.$router.push({ name: 'home' });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   },
 };
 export default {

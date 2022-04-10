@@ -127,7 +127,10 @@ export default {
     },
     ...mapActions(["update_profile"]),
     updateProfile() {
-      his.update_profile({ form: this.form, userId: this.$route.params.userId });
+      this.update_profile({
+        form: this.form,
+        userId: this.$route.params.userId,
+      });
     },
   },
 };
