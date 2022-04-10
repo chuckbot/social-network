@@ -35,7 +35,6 @@ const actions = {
         axios
           .get(`users/${data.userId}`)
           .then((res) => {
-            console.log(res.data.profile);
             commit("set_user_profile", res.data.profile);
             dispatch("change_profile_status", true);
             commit("set_update_status");

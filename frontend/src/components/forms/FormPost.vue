@@ -107,8 +107,23 @@ export default {
     },
     ...mapActions(["create_post"]),
     createPost() {
-      console.log({ ...this.form });
-      this.create_post({ ...this.form });
+      const formData = new FormData();
+      if (this.form.image) {
+        formData.append("image", this.form.image);
+      }
+      formData.append("title", this.form.title);
+      formData.append("type", this.form.type);
+      formData.append("text", this.form.text);
+      formData.append("isImportant", this.form.isImportant);
+      console.log(formData);
+      this.axios
+        .post("/posts", formData)
+        .then(() => {
+          this.$router.push({ name: "home" });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
