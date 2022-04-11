@@ -30,6 +30,9 @@ const getters = {
   get_profile_status(state) {
     return state.user.profileFilled;
   },
+  get_profile_id(state) {
+    return state.user.profile.id;
+  },
 };
 const mutations = {
   set_user_email(state, email) {

@@ -1,5 +1,4 @@
 const db = require("../models/index");
-
 // Get all profile:
 exports.getAllProfile = (req, res, next) => {
   db.Profile.findAll()
@@ -10,17 +9,16 @@ exports.getAllProfile = (req, res, next) => {
       res.status(404).json({ error });
     });
 };
-
 // Get a profile by userId:
-// exports.getProfileById = (req, res, next) => {
-//   db.Profile.findOne({ where: { userId: req.params.userId } })
-//     .then((profile) => {
-//       res.status(200).json({ profile });
-//     })
-//     .catch((error) => {
-//       res.status(404).json({ error });
-//     });
-// };
+exports.getProfileById = (req, res, next) => {
+  db.Profile.findOne({ where: { userId: req.params.userId } })
+    .then((profile) => {
+      res.status(200).json({ profile });
+    })
+    .catch((error) => {
+      res.status(404).json({ error });
+    });
+};
 
 // Update a profile:
 exports.updateProfile = (req, res, next) => {
@@ -30,7 +28,9 @@ exports.updateProfile = (req, res, next) => {
         ? {
             // Modifiable en fonction du JS frontend
             ...req.body,
-            profilePictureURL: `/back/images/${req.file.filename}`,
+            profilPictureURL: `${req.protocol}://${req.get("host")}/images/${
+              req.file.filename
+            }`,
           }
         : req.body;
       db.Profile.update(
@@ -48,8 +48,7 @@ exports.updateProfile = (req, res, next) => {
       res.status(404).json({ error });
     });
 };
-
-// Delete a profile and a user:
+// Supprimer un profil et un user:
 exports.deleteProfile = (req, res, next) => {
   if (req.session.user === req.params.userId) {
     db.Profile.destroy({ where: { useriId: req.params.userId } })

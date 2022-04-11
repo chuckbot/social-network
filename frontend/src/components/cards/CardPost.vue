@@ -1,6 +1,6 @@
 <template>
   <div id="card-post" class="card-post">
-    <div class="card-post__creator-infos">
+    <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
       <a href @click.prevent="goToProfile()">
         <div>
           <img :src="creatorImgUrl" alt="Picture Profile" />
