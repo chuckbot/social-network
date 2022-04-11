@@ -4,6 +4,7 @@
       <ModifyButton :modifyThis="modifyCom"></ModifyButton>
       <DeleteButton :deleteThis="deleteCom"></DeleteButton>
     </div>
+    <Date :type="this.type" :id="com.id"></Date>
     <a href="" @click.prevent="goToProfile()">
       <div>
         <img :src="profile.profileImg" alt="Profile Picture" />
@@ -30,6 +31,7 @@ import { mapGetters, mapActions } from "vuex";
 import ModifyButton from "../buttons/ModifyButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
 import FormCom from "../forms/FormCom.vue";
+import Date from "../Date.vue";
 export default {
   name: "CardCom",
   id: "#card-com",
@@ -37,6 +39,7 @@ export default {
     ModifyButton,
     DeleteButton,
     FormCom,
+    Date,
   },
   props: {
     profile: {
@@ -69,7 +72,7 @@ export default {
     },
   },
   data() {
-    return { changeCom: false };
+    return { changeCom: false, type: "COM" };
   },
   computed: {
     ...mapGetters(["get_profile_id", "get_change_com_status"]),

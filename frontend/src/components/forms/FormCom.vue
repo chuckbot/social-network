@@ -37,7 +37,6 @@ export default {
     },
     comId: {
       type: Number,
-      required: true,
     },
   },
   data() {

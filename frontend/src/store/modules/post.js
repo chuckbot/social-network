@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "../../router";
+import { formatDate } from "../../scripts/date";
 
 const state = {
   posts: null,
@@ -17,7 +18,15 @@ const getters = {
     return state.myPosts;
   },
   get_my_post: (state) => (postId) => {
-    return state.myPosts.find((post) => post[postId] === postId);
+    return state.myPosts.find((post) => post.id === postId);
+  },
+  get_local_post_date: (state) => (postId) => {
+    const post = state.posts.find((post) => post.id === postId);
+    const dates = {
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+    };
+    return formatDate(dates);
   },
 };
 const mutations = {

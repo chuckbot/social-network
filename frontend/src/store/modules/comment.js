@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatDate } from "../../scripts/date";
 
 const state = {
   local_coms: null,
@@ -10,6 +11,14 @@ const getters = {
   },
   get_change_com_status(state) {
     return state.change_com;
+  },
+  get_local_com_date: (state) => (comId) => {
+    const com = state.local_coms.find((com) => com.id === comId);
+    const dates = {
+      createdAt: com.createdAt,
+      updatedAt: com.updatedAt,
+    };
+    return formatDate(dates);
   },
 };
 const mutations = {

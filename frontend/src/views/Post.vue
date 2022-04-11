@@ -1,5 +1,6 @@
 <template>
   <div id="post">
+    <Date type="POST" :id="get_local_post.id"></Date>
     <div>
       <a href @click.prevent="goToProfile()">
         <div>
@@ -37,10 +38,11 @@
 import { mapGetters } from "vuex";
 import FluxComments from "../components/flux/FluxComments.vue";
 import FormCom from "../components/forms/FormCom.vue";
+import Date from "../components/Date.vue";
 export default {
   name: "Post",
   el: "#post",
-  components: { FormCom, FluxComments },
+  components: { FormCom, FluxComments, Date },
   beforeCreate() {
     this.$store.dispatch("commit_local_post", this.$route.params.postId);
   },

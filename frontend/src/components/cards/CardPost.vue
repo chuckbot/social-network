@@ -4,6 +4,7 @@
       <ModifyButton :modifyThis="modifyPost"></ModifyButton>
       <DeleteButton :deleteThis="deletePost"></DeleteButton>
     </div>
+    <Date :type="this.type" :id="this.postId"></Date>
     <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
       <a href="" @click.prevent="goToProfile()">
         <div><img :src="creatorImgUrl" alt="Profile Picture" /></div>
@@ -33,6 +34,7 @@
 <script>
 import DeleteButton from "../buttons/DeleteButton.vue";
 import ModifyButton from "../buttons/ModifyButton.vue";
+import Date from "../Date.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "CardPost",
@@ -40,6 +42,7 @@ export default {
   components: {
     DeleteButton,
     ModifyButton,
+    Date,
   },
   props: {
     id: {
@@ -83,6 +86,7 @@ export default {
   data() {
     return {
       postId: this.id,
+      type: "POST",
     };
   },
   compoted: {
