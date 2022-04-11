@@ -1,6 +1,6 @@
 <template>
   <div id="card-post" class="card-post" v-if="!deleted">
-    <div id="controllers" v-if="this.$route.name === 'profile'">
+    <div id="controllers" v-if="creatorId === this.get_profile_id">
       <ModifyButton :modifyPost="modifyPost"></ModifyButton>
       <DeleteButton :deletePost="deletePost"></DeleteButton>
     </div>
