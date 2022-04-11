@@ -5,7 +5,7 @@
       :key="post.id"
       :id="post.id"
       :title="post.title"
-      :content="post.content"
+      :content="post.text"
       :imgUrl="post.postPictureURL"
       :creatorFirstName="get_user_profile.firstName"
       :creatorLastName="get_user_profile.lastName"

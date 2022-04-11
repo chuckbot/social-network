@@ -3,7 +3,10 @@ const db = require("../models");
 exports.getAllPosts = (req, res, next) => {
   // Limitation de date ? (where: {updatedAt < 1j} ?)
   // Ou findAndCountAll avec limite de posts visibles par pages ?
-  db.Post.findAll({ include: db.Profile })
+  db.Post.findAll({
+    order: [["updatedAt", "DESC"]],
+    include: db.Profile,
+  })
     .then((posts) => {
       res.status(200).json({ posts });
     })

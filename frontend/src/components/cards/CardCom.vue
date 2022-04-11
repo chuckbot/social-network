@@ -1,10 +1,12 @@
 <template>
   <div id="card-com">
-    <div>
-      <img :src="profile.profileImg" alt="Profile Picture" />
-      <span>{{ profile.firstName }}</span>
-      <span> {{ profile.lastName }}</span>
-    </div>
+    <a href="" @click.prevent="goToProfile()">
+      <div>
+        <img :src="profile.profileImg" alt="Profile Picture" />
+        <span>{{ profile.firstName }}</span>
+        <span> {{ profile.lastName }}</span>
+      </div>
+    </a>
     <div>
       <span>{{ com.text }}</span>
     </div>

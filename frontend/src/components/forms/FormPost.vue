@@ -115,35 +115,9 @@ export default {
     textValidation() {
       this.validator.text = false;
     },
-    ...mapActions(["create_post"]),
+    ...mapActions(["create_modify_post"]),
     createOrModifyPost() {
-      const formData = new FormData();
-      if (this.form.image) {
-        formData.append("image", this.form.image);
-      }
-      formData.append("title", this.form.title);
-      formData.append("type", this.form.type);
-      formData.append("text", this.form.text);
-      formData.append("isImportant", this.form.isImportant);
-      if (this.$route.name === "create-post") {
-        this.axios
-          .post("/posts", formData)
-          .then(() => {
-            this.$router.push({ name: "home" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        this.axios
-          .put(`/posts/${this.$route.params.postId}`, formData)
-          .then(() => {
-            this.$router.push({ name: "home" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      this.create_modify_post({ form: this.form, route: this.$route });
     },
   },
   props: {
