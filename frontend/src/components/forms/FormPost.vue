@@ -43,6 +43,7 @@
         </textarea>
         <span v-if="validator.text"></span>
       </div>
+      <CancelButton :label="label.cancel" @cancel="cancel()"></CancelButton>
       <SubmitButton
         v-if="this.$route.name === 'create-post'"
         :label="label.submit"
@@ -59,6 +60,7 @@
 
 <script>
 import SubmitButton from "../buttons/SubmitButton.vue";
+import CancelButton from "../buttons/CancelButton.vue";
 import { mapActions } from "vuex";
 import {
   validateImage,
@@ -70,6 +72,7 @@ export default {
   el: "#form-post",
   components: {
     SubmitButton,
+    CancelButton,
   },
   data() {
     return {
@@ -79,6 +82,7 @@ export default {
         type: "Category",
         submit: "Publish",
         modify: "Modify",
+        cancel: "Cancel",
       },
       form: {
         image: this.oldPicture,
@@ -118,6 +122,17 @@ export default {
     ...mapActions(["create_modify_post"]),
     createOrModifyPost() {
       this.create_modify_post({ form: this.form, route: this.$route });
+    },
+    cancel() {
+      console.log(this.$route);
+      if (this.$route.name === "create-post") {
+        this.$router.push({ name: "home" });
+      } else {
+        this.$router.push({
+          name: "profile",
+          params: { userId: this.$store.getters.get_user_id },
+        });
+      }
     },
   },
   props: {
