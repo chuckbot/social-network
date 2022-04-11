@@ -29,5 +29,6 @@ export default {
   computed: {
     ...mapGetters(["get_my_posts", "get_user_profile"]),
   },
+  watch: {},
 };
 </script>

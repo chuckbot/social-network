@@ -1,10 +1,12 @@
 <template>
-  <div id="card-post" class="card-post">
+  <div id="card-post" class="card-post" v-if="!deleted">
+    <div id="controllers" v-if="this.$route.name === 'profile'">
+      <ModifyButton></ModifyButton>
+      <DeleteButton :deletePost="deletePost"></DeleteButton>
+    </div>
     <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
-      <a href @click.prevent="goToProfile()">
-        <div>
-          <img :src="creatorImgUrl" alt="Picture Profile" />
-        </div>
+      <a href="" @click.prevent="goToProfile()">
+        <div><img :src="creatorImgUrl" alt="Profil Picture" /></div>
         <div>
           <span>{{ creatorFirstName }}</span>
         </div>
@@ -14,14 +16,14 @@
       </a>
     </div>
     <div class="card-post__post-infos">
-      <a href @click.prevent="goToPost()">
+      <a href="" @click.prevent="goToPost()">
         <div id="post-img-ctn">
-          <img :src="imgUrl" alt />
+          <img :src="imgUrl" alt="" />
         </div>
         <div>
           <div id="title-post-ctn">{{ title }}</div>
           <div id="content-post-ctn">{{ content }}</div>
-          <div id="comments-post-ctn">{{ nbOfCom }} feedback</div>
+          <div id="comments-post-ctn">{{ nbOfCom }} commentaires</div>
         </div>
       </a>
     </div>
@@ -29,9 +31,15 @@
 </template>
 
 <script>
+import DeleteButton from "../buttons/DeleteButton.vue";
+import ModifyButton from "../buttons/ModifyButton.vue";
 export default {
   name: "CardPost",
   el: "#card-post",
+  components: {
+    DeleteButton,
+    ModifyButton,
+  },
   props: {
     id: {
       type: String,
@@ -51,12 +59,12 @@ export default {
     },
     title: {
       type: String,
-      default: "Untitled publication",
+      default: "Publication sans titre",
       required: true,
     },
     content: {
       type: String,
-      default: "Content of the publication",
+      default: "Contenu de la publication",
     },
     imgUrl: {
       type: String,
@@ -70,6 +78,7 @@ export default {
   data() {
     return {
       postId: this.id,
+      deleted: false,
     };
   },
   methods: {
@@ -77,10 +86,13 @@ export default {
       this.$router.push({ name: "post", params: { postId: this.postId } });
     },
     goToProfile() {},
+    deletePost() {
+      this.$store.dispatch("delete_my_post", this.postId);
+      this.deleted = true;
+    },
   },
 };
 </script>
-
 <style>
 .card-post {
   border: 2px solid black;

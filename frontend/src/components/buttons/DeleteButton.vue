@@ -1,6 +1,6 @@
 <template>
   <div id="delete-button">
-    <button>Supprimer</button>
+    <button @click="deletePost">Supprimer</button>
   </div>
 </template>
 <script>
@@ -8,8 +8,10 @@ export default {
   name: "DeleteButton",
   el: "#delete-button",
   props: {
-    type: Function,
-    required: true,
+    deletePost: {
+      type: Function,
+      required: true,
+    },
   },
 };
 </script>
