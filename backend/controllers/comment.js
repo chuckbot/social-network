@@ -20,10 +20,8 @@ exports.createCommentForPost = (req, res, next) => {
         postId: req.params.postId,
         profileId: profile.id,
       })
-        .then(() => {
-          res
-            .status(201)
-            .json({ message: "Comment created for post " + req.params.postId });
+        .then((com) => {
+          res.status(201).json(com);
         })
         .catch((error) => {
           res.status(400).json({ message: "Can't create comment: " + error });

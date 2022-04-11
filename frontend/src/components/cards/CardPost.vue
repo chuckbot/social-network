@@ -86,8 +86,10 @@ export default {
       deleted: false,
     };
   },
-  methods: {
+  compoted: {
     ...mapGetters(["get_profile_id"]),
+  },
+  methods: {
     goToPost() {
       this.$router.push({ name: "post", params: { postId: this.postId } });
     },

@@ -6,6 +6,7 @@ import app from "./modules/app";
 import auth from "./modules/auth";
 import profile from "./modules/profile";
 import post from "./modules/post";
+import comment from "./modules/comment";
 
 export default createStore({
   state: {},
@@ -16,6 +17,7 @@ export default createStore({
     auth,
     profile,
     post,
+    comment,
   },
   plugins: [createPersistedStore()],
 });

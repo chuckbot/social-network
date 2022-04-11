@@ -17,7 +17,7 @@
 
 <script>
 import CardPost from "../components/cards/CardPost.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
   el: "#home",
@@ -29,9 +29,6 @@ export default {
   },
   computed: {
     ...mapGetters(["get_local_posts"]),
-    methods: {
-      ...mapActions([]),
-    },
   },
 };
 </script>
