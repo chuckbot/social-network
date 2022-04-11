@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import FluxComments from "../components/flux/FluxComments.vue";
 import FormCom from "../components/forms/FormCom.vue";
 import Date from "../components/Date.vue";
@@ -47,8 +47,24 @@ export default {
     this.$store.dispatch("commit_local_post", this.$route.params.postId);
   },
   created() {},
+  data() {},
   computed: {
     ...mapGetters(["get_local_post", "get_local_coms"]),
+  },
+  methods: {
+    ...mapActions(["get_one_profile"]),
+    goToProfile() {
+      this.get_one_profile(this.get_local_post.Profile.userId)
+        .then(() => {
+          this.$router.push({
+            name: "profile",
+            params: { userId: this.get_local_post.Profile.userId },
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

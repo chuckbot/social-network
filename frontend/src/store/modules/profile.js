@@ -1,17 +1,29 @@
 import axios from "axios";
+
 const state = {
   updateProfile: false,
+  local_profile: null,
+  local_profiles: null,
 };
+
 const getters = {
   get_update_status(state) {
     return state.updateProfile;
   },
+  get_local_profile(state) {
+    return state.local_profile;
+  },
 };
+
 const mutations = {
   set_update_status(state) {
     state.updateProfile = !state.updateProfile;
   },
+  set_local_profile(state, profile) {
+    state.local_profile = profile;
+  },
 };
+
 const actions = {
   commit_update_status({ commit }) {
     commit("set_update_status");
@@ -35,7 +47,7 @@ const actions = {
         axios
           .get(`users/${data.userId}`)
           .then((res) => {
-            commit("set_user_profile", res.data.profile);
+            commit("set_user_profile", res.data);
             dispatch("change_profile_status", true);
             commit("set_update_status");
           })
@@ -47,12 +59,11 @@ const actions = {
         console.log(error.toJSON());
       });
   },
-  get_one_profile(profileId) {
+  get_one_profile({ commit }, userId) {
     axios
-      .get(`/users/${profileId}`)
+      .get(`/users/${userId}`)
       .then((res) => {
-        console.log(res.data);
-        return res.data;
+        commit("set_local_profile", res.data);
       })
       .catch((error) => {
         console.log(error);

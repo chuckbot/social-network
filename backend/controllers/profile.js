@@ -13,7 +13,7 @@ exports.getAllProfile = (req, res, next) => {
 exports.getProfileById = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.params.userId } })
     .then((profile) => {
-      res.status(200).json({ profile });
+      res.status(200).json(profile);
     })
     .catch((error) => {
       res.status(404).json({ error });

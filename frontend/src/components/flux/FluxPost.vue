@@ -26,6 +26,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("commit_local_posts");
+    this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
   },
   computed: {
     ...mapGetters(["get_local_posts"]),

@@ -129,7 +129,7 @@ export default {
         this.$router.push({ name: "home" });
       } else {
         this.$router.push({
-          name: "profile",
+          name: "my-profile",
           params: { userId: this.$store.getters.get_user_id },
         });
       }

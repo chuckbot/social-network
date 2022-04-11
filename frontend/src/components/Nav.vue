@@ -14,7 +14,7 @@ export default {
     return {
       pathToHome: { name: "home" },
       pathToProfile: {
-        name: "profile",
+        name: "my-profile",
         params: { userId: this.$store.getters.get_user_id },
       },
       pathToCreatePost: { name: "create-post" },

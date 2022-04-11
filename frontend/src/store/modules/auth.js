@@ -10,7 +10,7 @@ const state = {
       lastName: null,
       position: undefined,
       description: null,
-      profilePictureURL: null,
+      profilPictureURL: null,
     },
   },
 };
@@ -51,12 +51,13 @@ const mutations = {
     state.user = {
       email: null,
       _id: null,
+      profileFilled: null,
       profile: {
         firstName: null,
         lastName: null,
         position: null,
         description: null,
-        profilePictureURL: null,
+        profilPictureUrl: null,
       },
     };
   },
@@ -84,15 +85,15 @@ const actions = {
         axios
           .get(`users/${state.user._id}`)
           .then((res) => {
-            if (res.data.profile.firstName) {
+            if (res.data.firstName) {
               // Set user profile
               dispatch("change_profile_status", true);
-              commit("set_user_profile", res.data.profile);
+              commit("set_user_profile", res.data);
               router.push({ name: "home" });
             } else {
               dispatch("change_profile_status", false);
               router.push({
-                name: "profile",
+                name: "my-profile",
                 params: { userId: state.user._id },
               });
             }
@@ -141,7 +142,6 @@ const actions = {
       });
   },
 };
-
 export default {
   state,
   getters,

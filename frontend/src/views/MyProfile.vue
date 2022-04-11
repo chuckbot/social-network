@@ -1,5 +1,5 @@
 <template>
-  <div id="profile">
+  <div id="my-profile">
     <Sidebar :sidebar_items="this.sidebar_items"></Sidebar>
     <section id="change-profile" v-if="links.changeProfile || !get_profile_status">
       <h3>Modification du profil</h3>
@@ -43,6 +43,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import FormProfile from "../components/forms/FormProfile.vue";
 import CardProfile from "../components/cards/CardProfile.vue";
@@ -51,8 +52,8 @@ import FormPwd from "../components/forms/FormPwd.vue";
 import MyPosts from "../components/MyPosts.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "Profile",
-  el: "#profile",
+  name: "MyProfile",
+  el: "#my-profile",
   data() {
     return {
       sidebar_items: {
