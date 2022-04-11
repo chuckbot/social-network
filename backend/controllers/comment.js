@@ -1,5 +1,4 @@
 const db = require("../models/index");
-
 // Get all comments for a post:
 exports.getAllCommentForPost = (req, res, next) => {
   db.Comment.findAll({
@@ -38,35 +37,54 @@ exports.createCommentForPost = (req, res, next) => {
 exports.modifyCommentForPost = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.session.user } })
     .then((profile) => {
-      const profileId = profile.id;
-      db.Comment.findOne({
-        where: {
-          [Op.and]: [{ profileId: profileId }, { postId: req.params.postId }],
-        },
-      })
+      db.Comment.findOne({ where: { id: req.body.comId } })
         .then((comment) => {
-          db.Comment.update(
-            { where: { id: comment.id } },
-            {
-              text: req.body.text,
-              profileId: profileId,
-              postId: req.params.postId,
-            }
-          );
+          if (comment.profileId !== profile.id) {
+            res.status(401).json({ message: "Action not authorized." });
+          } else {
+            db.Comment.update(
+              {
+                text: req.body.text,
+                profileId: comment.profileId,
+                postId: req.params.postId,
+                id: req.body.comId,
+              },
+              {
+                returning: true,
+                where: {
+                  id: comment.id,
+                },
+              }
+            )
+              .then(() => {
+                db.Comment.findOne({ where: { id: req.body.comId } })
+                  .then((com) => {
+                    res.status(200).json(com);
+                  })
+                  .catch((error) => {
+                    res.status(404).json({ message: error });
+                  });
+              })
+              .catch((error) => {
+                res
+                  .status(400)
+                  .json({ message: "Can't cupdate com : " + error });
+              });
+          }
         })
         .catch((error) => {
-          res.status(401).json({ message: error });
+          res.status(404).json({ message: "Comment not found " + error });
         });
     })
     .catch((error) => {
-      res.status(404).json({ message: error });
+      res.status(404).json({ message: "User not found " + error });
     });
 };
+
 // Delete a comment for a post:
 exports.deleteCommentForPost = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.session.user } })
     .then((profile) => {
-      console.log(req.params.comId);
       db.Comment.findOne({ where: { id: req.params.comId } })
         .then((comment) => {
           if (comment.profileId !== profile.id) {
@@ -78,7 +96,7 @@ exports.deleteCommentForPost = (req, res, next) => {
               },
             })
               .then(() => {
-                res.status(200).json({ message: "Comment destroyed" });
+                res.status(200).json({ message: "Comment destroyed." });
               })
               .catch((error) => {
                 res.status(400).json({ message: error });

@@ -2,10 +2,14 @@ import axios from "axios";
 
 const state = {
   local_coms: null,
+  change_com: false,
 };
 const getters = {
   get_local_coms(state) {
     return state.local_coms;
+  },
+  get_change_com_status(state) {
+    return state.change_com;
   },
 };
 const mutations = {
@@ -16,7 +20,15 @@ const mutations = {
     state.local_coms.push(com);
   },
   remove_local_com(state, comId) {
-    state.local_coms = state.local_coms.filter((com) => com[comId] !== comId);
+    state.local_coms = state.local_coms.filter((com) => com.id !== comId);
+  },
+  update_local_com(state, comObj) {
+    state.local_coms[
+      state.local_coms.findIndex((com) => com.id === comObj.comId)
+    ] = comObj.com;
+  },
+  set_change_com(state) {
+    state.change_com = !state.change_com;
   },
 };
 
@@ -41,6 +53,22 @@ const actions = {
         console.log(error);
       });
   },
+  modify_my_com({ commit }, comObj) {
+    axios
+      .put(`/comments/${comObj.postId}`, {
+        text: comObj.text,
+        comId: comObj.comId,
+      })
+      .then((res) => {
+        commit("update_local_com", {
+          com: res.data,
+          comId: res.data.id,
+        });
+      })
+      .catch((error) => {
+        console.log(error.toJSON());
+      });
+  },
   delete_my_com({ commit }, comId) {
     axios
       .delete(`/comments/${comId}`)
@@ -50,6 +78,9 @@ const actions = {
       .catch((error) => {
         console.log(error);
       });
+  },
+  commit_change_com({ commit }) {
+    commit("set_change_com");
   },
 };
 
