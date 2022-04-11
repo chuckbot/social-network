@@ -14,6 +14,9 @@ const getters = {
   get_my_posts(state) {
     return state.myPosts;
   },
+  get_my_post: (state) => (postId) => {
+    return state.myPosts.find((post) => post[postId] === postId);
+  },
 };
 const mutations = {
   set_local_posts(state, posts) {

@@ -7,6 +7,7 @@
       :content="post.text"
       :imgUrl="post.postPictureURL"
       :id="post.id"
+      :creatorId="post.profileId"
       :creatorFirstName="post.Profile.firstName"
       :creatorLastName="post.Profile.lastName"
       :creatorImgUrl="post.Profile.profilePictureURL"

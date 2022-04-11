@@ -19,7 +19,7 @@
       </div>
       <div>
         <div id="title-post-ctn">{{ get_local_post.title }}</div>
-        <div id="content-post-ctn">{{ get_local_post.content }}</div>
+        <div id="content-post-ctn">{{ get_local_post.text }}</div>
       </div>
     </div>
     <div></div>

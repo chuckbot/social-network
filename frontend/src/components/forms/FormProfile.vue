@@ -81,10 +81,10 @@ export default {
   data() {
     return {
       label: {
-        submit: "Mettre à jour",
-        firstName: "Prénom",
-        lastName: "Nom",
-        position: "Poste",
+        submit: "Update",
+        firstName: "First Name",
+        lastName: "Last Name",
+        position: "Post",
         description: "Description",
       },
       form: {

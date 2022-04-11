@@ -1,12 +1,12 @@
 <template>
   <div id="card-post" class="card-post" v-if="!deleted">
     <div id="controllers" v-if="this.$route.name === 'profile'">
-      <ModifyButton></ModifyButton>
+      <ModifyButton :modifyPost="modifyPost"></ModifyButton>
       <DeleteButton :deletePost="deletePost"></DeleteButton>
     </div>
     <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
       <a href="" @click.prevent="goToProfile()">
-        <div><img :src="creatorImgUrl" alt="Profil Picture" /></div>
+        <div><img :src="creatorImgUrl" alt="Profile Picture" /></div>
         <div>
           <span>{{ creatorFirstName }}</span>
         </div>
@@ -23,7 +23,7 @@
         <div>
           <div id="title-post-ctn">{{ title }}</div>
           <div id="content-post-ctn">{{ content }}</div>
-          <div id="comments-post-ctn">{{ nbOfCom }} commentaires</div>
+          <div id="comments-post-ctn">{{ nbOfCom }} feedback</div>
         </div>
       </a>
     </div>
@@ -33,6 +33,7 @@
 <script>
 import DeleteButton from "../buttons/DeleteButton.vue";
 import ModifyButton from "../buttons/ModifyButton.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "CardPost",
   el: "#card-post",
@@ -42,6 +43,10 @@ export default {
   },
   props: {
     id: {
+      type: String,
+      required: true,
+    },
+    creatorId: {
       type: String,
       required: true,
     },
@@ -59,12 +64,12 @@ export default {
     },
     title: {
       type: String,
-      default: "Publication sans titre",
+      default: "Untitled publication",
       required: true,
     },
     content: {
       type: String,
-      default: "Contenu de la publication",
+      default: "Content of the publication",
     },
     imgUrl: {
       type: String,
@@ -82,13 +87,23 @@ export default {
     };
   },
   methods: {
+    ...mapGetters(["get_profile_id"]),
     goToPost() {
       this.$router.push({ name: "post", params: { postId: this.postId } });
     },
     goToProfile() {},
     deletePost() {
       this.$store.dispatch("delete_my_post", this.postId);
+      if (this.$route.name === "post") {
+        this.$router.push({ name: "home" });
+      }
       this.deleted = true;
+    },
+    modifyPost() {
+      this.$router.push({
+        name: "modify-post",
+        params: { postId: this.postId },
+      });
     },
   },
 };

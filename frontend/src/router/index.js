@@ -35,6 +35,11 @@ const routes = [
     name: "create-post",
     component: () => import("../views/CreatePost.vue"),
   },
+  {
+    path: "/post/modify/:postId",
+    name: "modify-post",
+    component: () => import("../views/ModifyPost.vue"),
+  },
 ];
 
 const router = createRouter({
