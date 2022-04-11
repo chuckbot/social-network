@@ -65,9 +65,7 @@ exports.createPost = (req, res, next) => {
         : { ...req.body, profileId: profile.id };
       db.Post.create({ ...postObj })
         .then((post) => {
-          res
-            .status(201)
-            .json({ message: "Post successfully created. " + post.id });
+          res.status(201).json(post);
         })
         .catch((error) => {
           res.status(400).json({ error });
@@ -92,9 +90,13 @@ exports.modifyPost = (req, res, next) => {
           : { ...req.body };
         db.Post.update({ ...postObj }, { where: { id: req.params.postId } })
           .then(() => {
-            res
-              .status(201)
-              .json({ message: `Post ${req.params.postId} modified.` });
+            db.Post.findOne({ where: { id: req.params.postId } })
+              .then((post) => {
+                res.status(201).json(post);
+              })
+              .catch((error) => {
+                res.status(404).json({ message: "Post not found : " + error });
+              });
           })
           .catch((error) => {
             res.status(400).json({ message: "Post update failed: " + error });

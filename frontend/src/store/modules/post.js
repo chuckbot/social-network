@@ -1,4 +1,6 @@
 import axios from "axios";
+import router from "../../router";
+
 const state = {
   posts: null,
   post: null,
@@ -33,6 +35,11 @@ const mutations = {
   },
   add_my_post(state, post) {
     state.myPosts.push(post);
+  },
+  update_my_posts(state, postObj) {
+    state.myPosts[
+      state.myPosts.findIndex((post) => post.id === postObj.postId)
+    ] = postObj.post;
   },
   remove_my_post(state, postId) {
     state.myPosts = state.myPosts.filter((post) => post[postId] !== postId);
@@ -70,7 +77,6 @@ const actions = {
       });
   },
   create_modify_post({ commit }, postObj) {
-    console.log(postObj);
     const formData = new FormData();
     if (postObj.form.image) {
       formData.append("image", postObj.form.image);
@@ -81,20 +87,21 @@ const actions = {
     formData.append("isImportant", postObj.form.isImportant);
     console.log(formData);
     if (postObj.route.name === "create-post") {
-      this.axios
+      axios
         .post("/posts", formData)
         .then((res) => {
-          this.$router.push({ name: "home" });
+          router.push({ name: "home" });
           commit("add_my_post", res.data);
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      this.axios
+      axios
         .put(`/posts/${postObj.route.params.postId}`, formData)
-        .then(() => {
-          this.$router.push({ name: "home" });
+        .then((res) => {
+          commit("update_my_posts", { postId: res.data.id, post: res.data });
+          router.push({ name: "home" });
         })
         .catch((error) => {
           console.log(error);

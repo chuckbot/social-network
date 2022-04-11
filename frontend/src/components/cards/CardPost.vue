@@ -1,5 +1,5 @@
 <template>
-  <div id="card-post" class="card-post" v-if="!deleted">
+  <div id="card-post" class="card-post">
     <div id="controllers" v-if="creatorId === this.get_profile_id">
       <ModifyButton :modifyThis="modifyPost"></ModifyButton>
       <DeleteButton :deleteThis="deletePost"></DeleteButton>
@@ -83,7 +83,6 @@ export default {
   data() {
     return {
       postId: this.id,
-      deleted: false,
     };
   },
   compoted: {
