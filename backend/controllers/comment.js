@@ -5,6 +5,7 @@ exports.getAllCommentForPost = (req, res, next) => {
   db.Comment.findAll({
     where: { postId: req.params.postId },
     include: db.Profile,
+    order: [["createdAt", "ASC"]],
   })
     .then((comments) => {
       res.status(200).json({ comments });
@@ -13,7 +14,6 @@ exports.getAllCommentForPost = (req, res, next) => {
       res.status(404).json({ message: "Can't find comments: " + error });
     });
 };
-
 // Create a comment for a post:
 exports.createCommentForPost = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.session.user } })
@@ -34,7 +34,6 @@ exports.createCommentForPost = (req, res, next) => {
       res.status(404).json({ message: "Profile not found: " + error });
     });
 };
-
 // Modify a comment for a post:
 exports.modifyCommentForPost = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.session.user } })
@@ -63,24 +62,34 @@ exports.modifyCommentForPost = (req, res, next) => {
       res.status(404).json({ message: error });
     });
 };
-
 // Delete a comment for a post:
 exports.deleteCommentForPost = (req, res, next) => {
   db.Profile.findOne({ where: { userId: req.session.user } })
     .then((profile) => {
-      db.Comment.destroy({
-        where: {
-          [Op.and]: [{ profileId: profile.id }, { postId: req.params.postId }],
-        },
-      })
-        .then(() => {
-          res.status(200).json({ message: "Comment destroyed" });
+      console.log(req.params.comId);
+      db.Comment.findOne({ where: { id: req.params.comId } })
+        .then((comment) => {
+          if (comment.profileId !== profile.id) {
+            res.status(401).json({ message: "Action not authorized." });
+          } else {
+            db.Comment.destroy({
+              where: {
+                id: comment.id,
+              },
+            })
+              .then(() => {
+                res.status(200).json({ message: "Comment destroyed" });
+              })
+              .catch((error) => {
+                res.status(400).json({ message: error });
+              });
+          }
         })
         .catch((error) => {
-          res.status(400).json({ message: error });
+          res.status(404).json({ message: "Comment not found " + error });
         });
     })
     .catch((error) => {
-      res.status(404).json({ message: error });
+      res.status(404).json({ message: "User not found " + error });
     });
 };

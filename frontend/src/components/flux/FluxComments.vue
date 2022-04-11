@@ -3,7 +3,7 @@
     <CardCom
       v-for="com in get_local_coms"
       :key="com.id"
-      :com="{ text: com.text }"
+      :com="{ text: com.text, id: com.id }"
       :profile="{
         id: com.Profile ? com.Profile.id : get_user_profile.id,
         firstName: com.Profile ? com.Profile.firstName : get_user_profile.firstName,

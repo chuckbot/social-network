@@ -1,6 +1,6 @@
 <template>
   <div id="modify-button">
-    <button @click="modifyPost">Modifier</button>
+    <button @click="modifyThis">Modifier</button>
   </div>
 </template>
 <script>
@@ -8,7 +8,7 @@ export default {
   name: "modifyButton",
   el: "#modify-button",
   props: {
-    modifyPost: {
+    modifyThis: {
       type: Function,
       required: true,
     },

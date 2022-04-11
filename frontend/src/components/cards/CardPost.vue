@@ -1,8 +1,8 @@
 <template>
   <div id="card-post" class="card-post" v-if="!deleted">
     <div id="controllers" v-if="creatorId === this.get_profile_id">
-      <ModifyButton :modifyPost="modifyPost"></ModifyButton>
-      <DeleteButton :deletePost="deletePost"></DeleteButton>
+      <ModifyButton :modifyThis="modifyPost"></ModifyButton>
+      <DeleteButton :deleteThis="deletePost"></DeleteButton>
     </div>
     <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
       <a href="" @click.prevent="goToProfile()">

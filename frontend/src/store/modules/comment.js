@@ -15,6 +15,9 @@ const mutations = {
   add_local_com(state, com) {
     state.local_coms.push(com);
   },
+  remove_local_com(state, comId) {
+    state.local_coms = state.local_coms.filter((com) => com[comId] !== comId);
+  },
 };
 
 const actions = {
@@ -33,6 +36,16 @@ const actions = {
       .post(`/comments/${comObj.postId}`, { text: comObj.com })
       .then((res) => {
         commit("add_local_com", res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  delete_my_com({ commit }, comId) {
+    axios
+      .delete(`/comments/${comId}`)
+      .then(() => {
+        commit("remove_local_com", comId);
       })
       .catch((error) => {
         console.log(error);
