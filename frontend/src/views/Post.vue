@@ -24,7 +24,7 @@
     </div>
     <div>
       <div>
-        {{ get_local_coms }}
+        <FluxComments></FluxComments>
       </div>
       <div>
         <FormCom></FormCom>
@@ -35,14 +35,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import FluxComments from "../components/flux/FluxComments.vue";
 import FormCom from "../components/forms/FormCom.vue";
 export default {
   name: "Post",
   el: "#post",
-  components: { FormCom },
+  components: { FormCom, FluxComments },
   beforeCreate() {
     this.$store.dispatch("commit_local_post", this.$route.params.postId);
-    this.$store.dispatch("commit_local_coms", this.$route.params.postId);
   },
   created() {},
   computed: {

@@ -2,7 +2,10 @@ const db = require("../models/index");
 
 // Get all comments for a post:
 exports.getAllCommentForPost = (req, res, next) => {
-  db.Comment.findAll({ where: { postId: req.params.postId } })
+  db.Comment.findAll({
+    where: { postId: req.params.postId },
+    include: db.Profile,
+  })
     .then((comments) => {
       res.status(200).json({ comments });
     })
