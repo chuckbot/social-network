@@ -77,57 +77,81 @@ exports.createPost = (req, res, next) => {
 };
 // Modify a post:
 exports.modifyPost = (req, res, next) => {
-  db.Profile.findOne({ where: { userId: req.session.user }, include: db.Post })
-    .then((profile) => {
-      if (profile.Posts.find((post) => post.id === req.params.postId)) {
-        const postObj = req.file
-          ? {
-              ...req.body,
-              postPictureURL: `${req.protocol}://${req.get("host")}/images/${
-                req.file.filename
-              }`,
-            }
-          : { ...req.body };
-        db.Post.update({ ...postObj }, { where: { id: req.params.postId } })
-          .then(() => {
-            db.Post.findOne({ where: { id: req.params.postId } })
-              .then((post) => {
-                res.status(201).json(post);
+  db.User.findOne({
+    where: { id: req.session.user },
+    attributes: ["isModerator", "profileId"],
+  })
+    .then((user) => {
+      db.Post.findOne({ where: { id: req.params.postId } })
+        .then((post) => {
+          if (post.profileId === user.profileId || user.isModerator) {
+            const postObj = req.file
+              ? {
+                  ...req.body,
+                  postPictureURL: `${req.protocol}://${req.get(
+                    "host"
+                  )}/images/${req.file.filename}`,
+                }
+              : { ...req.body };
+            db.Post.update({ ...postObj }, { where: { id: req.params.postId } })
+              .then(() => {
+                db.Post.findOne({ where: { id: req.params.postId } })
+                  .then((post) => {
+                    res.status(201).json(post);
+                  })
+                  .catch((error) => {
+                    res
+                      .status(404)
+                      .json({ message: "Post not found : " + error });
+                  });
               })
               .catch((error) => {
-                res.status(404).json({ message: "Post not found : " + error });
+                res
+                  .status(400)
+                  .json({ message: "Post update failed: " + error });
               });
-          })
-          .catch((error) => {
-            res.status(400).json({ message: "Post update failed: " + error });
-          });
-      } else {
-        res.status(401).json({ message: "Unauthorized access." });
-      }
+          } else {
+            res.status(401).json({ message: "Unauthorized access." });
+          }
+        })
+        .catch((error) => {
+          res.status(404).json({ message: "Post not found " + error });
+        });
     })
     .catch((error) => {
-      res.status(404).json({ message: "Profile not found: " + error });
+      res.status(404).json({ message: "User not found " + error });
     });
 };
 // Delete a post:
 exports.deletepost = (req, res, next) => {
-  db.Profile.findOne({ where: { userId: req.session.user }, include: db.Post })
-    .then((profile) => {
-      if (profile.Posts.find((post) => post.id === req.params.postId)) {
-        db.Post.destroy({ where: { id: req.params.postId } })
-          .then(() => {
-            res
-              .status(200)
-              .json({ message: `Post ${req.params.postId} deleted.` });
-          })
-          .catch((error) => {
-            res.status(400).json({ message: "Post delete failed: " + error });
-          });
-      } else {
-        res.status(401).json({ message: "Unauthorized access." });
-      }
+  db.User.findOne({
+    where: { id: req.session.user },
+    attrubutes: ["isModerator", "profileId"],
+  })
+    .then((user) => {
+      db.Post.findOne({ where: { id: req.params.postId } })
+        .then((post) => {
+          if (post.profileId === user.profileId || user.isModerator) {
+            db.Post.destroy({ where: { id: req.params.postId } })
+              .then(() => {
+                res
+                  .status(200)
+                  .json({ message: `Post ${req.params.postId} deleted.` });
+              })
+              .catch((error) => {
+                res
+                  .status(400)
+                  .json({ message: "Post delete failed: " + error });
+              });
+          } else {
+            res.status(401).json({ message: "Unauthorized access." });
+          }
+        })
+        .catch((error) => {
+          res.status(404).json({ message: "Post not found " + error });
+        });
     })
     .catch((error) => {
-      res.status(404).json({ message: "Profil not found: " + error });
+      res.status(404).json({ message: "User not found " + error });
     });
 };

@@ -1,6 +1,6 @@
 // Import packages :
 const express = require("express");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "./.env" });
 const path = require("path");
 const fs = require("fs");
 const helmet = require("helmet");

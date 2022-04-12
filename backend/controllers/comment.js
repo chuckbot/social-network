@@ -35,13 +35,15 @@ exports.createCommentForPost = (req, res, next) => {
 };
 // Modify a comment for a post:
 exports.modifyCommentForPost = (req, res, next) => {
-  db.Profile.findOne({ where: { userId: req.session.user } })
-    .then((profile) => {
+  db.user
+    .findOne({
+      where: { id: req.session.user },
+      attributes: ["isModerator", "profileId"],
+    })
+    .then((user) => {
       db.Comment.findOne({ where: { id: req.body.comId } })
         .then((comment) => {
-          if (comment.profileId !== profile.id) {
-            res.status(401).json({ message: "Action not authorized." });
-          } else {
+          if (comment.profileId === user.profileId || user.isModerator) {
             db.Comment.update(
               {
                 text: req.body.text,
@@ -68,12 +70,14 @@ exports.modifyCommentForPost = (req, res, next) => {
               .catch((error) => {
                 res
                   .status(400)
-                  .json({ message: "Can't cupdate com : " + error });
+                  .json({ message: "Can't update com : " + error });
               });
+          } else {
+            res.status(401).json({ message: "Action not authorized." });
           }
         })
         .catch((error) => {
-          res.status(404).json({ message: "Comment not found " + error });
+          res.status(404).json({ message: "User not found" + error });
         });
     })
     .catch((error) => {
@@ -83,13 +87,14 @@ exports.modifyCommentForPost = (req, res, next) => {
 
 // Delete a comment for a post:
 exports.deleteCommentForPost = (req, res, next) => {
-  db.Profile.findOne({ where: { userId: req.session.user } })
-    .then((profile) => {
+  db.User.findOne({
+    where: { id: req.session.user },
+    attributes: ["isModerator", "profileId"],
+  })
+    .then((user) => {
       db.Comment.findOne({ where: { id: req.params.comId } })
         .then((comment) => {
-          if (comment.profileId !== profile.id) {
-            res.status(401).json({ message: "Action not authorized." });
-          } else {
+          if (comment.profileId === user.profileId || !user.isModerator) {
             db.Comment.destroy({
               where: {
                 id: comment.id,
@@ -101,6 +106,8 @@ exports.deleteCommentForPost = (req, res, next) => {
               .catch((error) => {
                 res.status(400).json({ message: error });
               });
+          } else {
+            res.status(401).json({ message: "Action not authorized." });
           }
         })
         .catch((error) => {

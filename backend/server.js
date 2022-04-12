@@ -1,6 +1,6 @@
 const app = require("./app");
 const http = require("http");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "./.env" });
 
 /**
  * Returns a valid port.

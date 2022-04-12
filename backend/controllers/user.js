@@ -3,6 +3,7 @@ const session = require("express-session");
 const jwt = require("jsonwebtoken");
 
 const db = require("../models/index");
+const user = require("../models/user");
 
 // Create new user and his empty profile:
 exports.signup = (req, res, next) => {
@@ -12,6 +13,7 @@ exports.signup = (req, res, next) => {
       const user = db.User.create({
         email: req.body.email,
         password: hash,
+        isModerator: req.body.email === "admin@groupomania.com" ? true : false,
       });
       return user;
     })
@@ -28,7 +30,6 @@ exports.signup = (req, res, next) => {
     )
     .catch((error) => res.status(400).json({ message: error }));
 };
-
 // Connect user:
 exports.signin = (req, res, next) => {
   db.User.findOne({ where: { email: req.body.email } })
@@ -42,6 +43,7 @@ exports.signin = (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error });
           }
+          // Creating cookie
           req.session.user = user.id;
           res.status(200).json({
             userId: user.id,
@@ -51,7 +53,6 @@ exports.signin = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
 // Get a userId:
 exports.getUser = (req, res, next) => {
   if (req.session) {
@@ -60,7 +61,6 @@ exports.getUser = (req, res, next) => {
     res.status(200).json({ message: "Cookie not present." });
   }
 };
-
 // Logout :
 exports.logout = (req, res, next) => {
   if (req.session) {
@@ -78,38 +78,49 @@ exports.logout = (req, res, next) => {
 
 // Password change:
 exports.changePassword = (req, res, next) => {
-  if (req.session.user === req.params.id) {
-    db.User.findOne({ where: { id: req.params.id } })
-      .then(() => {
-        bcrypt.hash(req.body.password, 10).then((hash) => {
-          db.User.update({ password: hash }, { where: { id: req.params.id } })
-            .then(() => {
-              res.status(201).json({ message: "Password changed." });
-            })
-            .catch((error) => {
-              res.status(400).json({ error });
-            });
-        });
-      })
-      .catch((error) => {
-        res.status(404).json({ error });
-      });
-  } else {
-    res.status(401).json({ message: "Unauthaurized access." });
-  }
+  db.User.findOne({ where: { userId: req.params.id } })
+    .then((user) => {
+      if (req.session.user === user.id || user.isModerator) {
+        bcrypt
+          .hash(req.body.password, 10)
+          .then((hash) => {
+            db.User.update({ where: { id: req.params.id } }, { password: hash })
+              .then(() => {
+                res.status(201).json({ message: "Password changed." });
+              })
+              .catch((error) => {
+                res.status(400).json({ message: error });
+              });
+          })
+          .catch((error) => {
+            res.status(400).json(error);
+          });
+      } else {
+        res.status(401).json({ message: "Unauthaurized access." });
+      }
+    })
+    .catch((error) => {
+      res.status(404).json({ message: "User not found" + error });
+    });
 };
 
 // Deleting a user:
 exports.destroyUser = (req, res, next) => {
-  if (req.session.user === req.params.id) {
-    db.User.destroy({ where: { id: req.params.id } })
-      .then(() => {
-        res.status(201).json({ message: "User destroyed." });
-      })
-      .catch((error) => {
-        res.status(400).json({ error });
-      });
-  } else {
-    res.status(401).json({ message: "Unauthorized access." });
-  }
+  db.User.findOne({ where: { id: req.params.id } })
+    .then((user) => {
+      if (req.session.user === req.params.id || user.isModerator) {
+        db.User.destroy({ where: { id: req.params.id } })
+          .then(() => {
+            res.status(201).json({ message: "User destroyed." });
+          })
+          .catch((error) => {
+            res.status(400).json({ error });
+          });
+      } else {
+        res.status(401).json({ message: "Unauthorized access." });
+      }
+    })
+    .catch((error) => {
+      res.status(404).json({ message: error });
+    });
 };
