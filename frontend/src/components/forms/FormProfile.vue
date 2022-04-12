@@ -67,7 +67,7 @@
           id="position"
           name="position"
           type="text"
-          placeholder="Comptable"
+          placeholder="Accountant"
           v-model="form.position"
           @input="positionValidation()"
         />

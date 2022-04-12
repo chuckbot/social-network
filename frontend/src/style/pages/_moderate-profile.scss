@@ -1,0 +1,37 @@
+.moderate-profile {
+    &__controllers {
+      margin: auto;
+      padding: 1rem;
+      @media screen and (min-width: $bp_tablet) {
+        width: 80%;
+      }
+      @media screen and (min-width: $bp_laptop) {
+        width: 60%;
+      }
+      @media screen and (min-width: $bp_laptop_large) {
+        width: 50%;
+      }
+      @media screen and (min-width: $bp_big_screen) {
+        width: 40%;
+      }
+    }
+    &__card-profile {
+      margin: auto;
+      margin-bottom: 1.5rem;
+      @media screen and (min-width: $bp_tablet) {
+        width: 80%;
+      }
+      @media screen and (min-width: $bp_laptop) {
+        width: 60%;
+      }
+      @media screen and (min-width: $bp_laptop_large) {
+        width: 50%;
+      }
+      @media screen and (min-width: $bp_big_screen) {
+        width: 40%;
+      }
+    }
+    &__form {
+      margin: auto;
+    }
+  }

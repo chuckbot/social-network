@@ -23,7 +23,7 @@
           required
           v-model="form.email"
           @input="emailValidation()"
-          placeholder="exemple@groupomania.fr"
+          placeholder="exemple@groupomania.com"
           class="input input--sign box text--normal-f text--light-w"
         />
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="signup" class="bg--white sign">
-    <h1 class="title--main text--center">S'inscrire</h1>
+    <h1 class="title--main text--center">To register</h1>
     <p class="text--normal-w text--center text--small-f">
       Join hundreds of Groupomaniacs on your company's social network!
     </p>
@@ -15,7 +15,7 @@
 <script>
 import FormSignup from "../components/forms/FormSignup.vue";
 export default {
-  name: "Signup",
+  name: "SignUp",
   el: "#signup",
   components: {
     FormSignup,

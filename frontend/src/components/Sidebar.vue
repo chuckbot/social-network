@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "Sidebar",
+  name: "SideBar",
   el: "#sidebar",
   data() {
     return {};

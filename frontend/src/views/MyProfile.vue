@@ -1,6 +1,6 @@
 <template>
   <div id="my-profile" class="my-profile">
-    <Sidebar :sidebar_items="this.sidebar_items" class="my-profile__sidebar"></Sidebar>
+    <SideBar :sidebar_items="this.sidebar_items" class="my-profile__sidebar"></SideBar>
     <div class="ctn--profile-view">
       <section
         class="my-profile__change-profile ctn ctn--column"
@@ -86,7 +86,7 @@
 <script>
 import FormProfile from "../components/forms/FormProfile.vue";
 import CardProfile from "../components/cards/CardProfile.vue";
-import Sidebar from "../components/Sidebar.vue";
+import SideBar from "../components/Sidebar.vue";
 import FormPwd from "../components/forms/FormPwd.vue";
 import MyPosts from "../components/MyPosts.vue";
 import CardPost from "../components/cards/CardPost.vue";
@@ -147,7 +147,7 @@ export default {
     };
   },
   components: {
-    Sidebar,
+    SideBar,
     CardProfile,
     FormProfile,
     FormPwd,

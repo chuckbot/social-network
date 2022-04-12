@@ -7,7 +7,7 @@
 <script>
 import FluxProfiles from "../components/flux/FluxProfiles.vue";
 export default {
-  name: "Profiles",
+  name: "ProfilesPage",
   el: "#profiles",
   components: {
     FluxProfiles,

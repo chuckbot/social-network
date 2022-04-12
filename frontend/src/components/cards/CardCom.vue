@@ -22,7 +22,7 @@
         </div>
       </a>
     </div>
-    <Date :type="this.type" :id="com.id" class="card-com__date"></Date>
+    <DateCom :type="this.type" :id="com.id" class="card-com__date"></DateCom>
     <div v-if="!this.changeCom" class="card-com__com">
       <p class="text--normal-w text--normal-f">{{ com.text }}</p>
     </div>
@@ -42,7 +42,7 @@ import { mapGetters, mapActions } from "vuex";
 import ModifyButton from "../buttons/ModifyButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
 import FormCom from "../forms/FormCom.vue";
-import Date from "../Date.vue";
+import DateCom from "../Date.vue";
 export default {
   name: "CardCom",
   id: "#card-com",
@@ -50,7 +50,7 @@ export default {
     ModifyButton,
     DeleteButton,
     FormCom,
-    Date,
+    DateCom,
   },
   props: {
     profile: {

@@ -7,7 +7,7 @@
 <script>
 import FluxPost from "../components/flux/FluxPost.vue";
 export default {
-  name: "Home",
+  name: "HomePage",
   el: "#home",
   components: {
     FluxPost,

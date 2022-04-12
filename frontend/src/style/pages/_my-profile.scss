@@ -1,0 +1,74 @@
+.my-profile {
+    min-height: 90vh;
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 4rem 0 2rem 0;
+      text-align: center;
+    }
+    &__profile {
+      width: 100%;
+    }
+    @media screen and (min-width: $bp_tablet) {
+      display: flex;
+      &__sidebar {
+        margin-top: 10rem;
+        margin-left: 2rem;
+        width: 30%;
+        align-self: flex-start;
+      }
+    }
+    @media screen and (min-width: $bp_laptop) {
+    }
+    @media screen and (min-width: $bp_laptop_large) {
+    }
+    @media screen and (min-width: $bp_big_screen) {
+    }
+    &__my-infos {
+      ul {
+        li {
+          list-style-type: none;
+        }
+      }
+    }
+    &__my-posts {
+      #my-posts .card-post {
+        @media screen and (min-width: $bp_tablet) {
+          width: 100%;
+        }
+        @media screen and (min-width: $bp_laptop) {
+        }
+        @media screen and (min-width: $bp_laptop_large) {
+        }
+        @media screen and (min-width: $bp_big_screen) {
+        }
+      }
+    }
+    &__my-coms {
+      .card-post {
+        @media screen and (min-width: $bp_tablet) {
+          width: 100%;
+        }
+        @media screen and (min-width: $bp_laptop) {
+        }
+        @media screen and (min-width: $bp_laptop_large) {
+        }
+        @media screen and (min-width: $bp_big_screen) {
+        }
+      }
+    }
+    &__change-profile {
+      @media screen and (min-width: $bp_tablet) {
+        width: 100%;
+      }
+      @media screen and (min-width: $bp_laptop) {
+      }
+      @media screen and (min-width: $bp_laptop_large) {
+      }
+      @media screen and (min-width: $bp_big_screen) {
+      }
+    }
+    &__backlink {
+      margin-top: 2rem;
+    }
+  }

@@ -16,7 +16,7 @@
 <script>
 import FormSignin from "../components/forms/FormSignin.vue";
 export default {
-  name: "Signin",
+  name: "SignIn",
   el: "#signin",
   components: {
     FormSignin,
@@ -29,5 +29,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

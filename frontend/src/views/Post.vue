@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="post__post-infos">
-      <Date type="POST" :id="get_local_post.id"></Date>
+      <DateCom type="POST" :id="get_local_post.id"></DateCom>
       <div>
         <h1 id="title-post-ctn" class="text--large-f text--normal-w">
           {{ get_local_post.title }}
@@ -58,13 +58,13 @@
 import { mapGetters, mapActions } from "vuex";
 import FluxComments from "../components/flux/FluxComments.vue";
 import FormCom from "../components/forms/FormCom.vue";
-import Date from "../components/Date.vue";
+import DateCom from "../components/Date.vue";
 import ModifyButton from "../components/buttons/ModifyButton.vue";
 import DeleteButton from "../components/buttons/DeleteButton.vue";
 export default {
-  name: "Post",
+  name: "PostPage",
   el: "#post",
-  components: { FormCom, FluxComments, Date, ModifyButton, DeleteButton },
+  components: { FormCom, FluxComments, DateCom, ModifyButton, DeleteButton },
   beforeCreate() {
     this.$store.dispatch("commit_local_post", this.$route.params.postId);
   },

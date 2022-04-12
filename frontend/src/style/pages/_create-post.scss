@@ -1,0 +1,15 @@
+.create-post {
+    border: $p_darker solid 0.5rem;
+    h1 {
+      margin: 1rem 0 1rem 0;
+      @media screen and (min-width: $bp_tablet) {
+        margin: 2rem 0 2rem 0;
+      }
+      @media screen and (min-width: $bp_laptop) {
+      }
+      @media screen and (min-width: $bp_laptop_large) {
+      }
+      @media screen and (min-width: $bp_big_screen) {
+      }
+    }
+  }

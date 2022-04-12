@@ -24,7 +24,7 @@ import CardProfile from "../components/cards/CardProfile.vue";
 import FluxPost from "../components/flux/FluxPost.vue";
 import { mapGetters } from "vuex";
 export default {
-  name: "Profile",
+  name: "ProfilePage",
   el: "#profile",
   components: { CardProfile, FluxPost },
   computed: {

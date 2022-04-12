@@ -27,12 +27,12 @@ const formatDate = (dates) => {
   const splitTime = splitDate[1].slice(0, 5).split(":");
 
   return dates.createdAt === dates.updatedAt
-    ? `Le ${splitYear[2]} ${months[parseInt(splitYear[1]) - 1]} ${
+    ? `The ${splitYear[2]} ${months[parseInt(splitYear[1]) - 1]} ${
         splitYear[0]
-      } à ${splitTime[0]}h ${splitTime[1]}mn`
-    : `Modifié le ${splitYear[2]} ${months[parseInt(splitYear[1]) - 1]} ${
+      } at ${splitTime[0]}h ${splitTime[1]}mn`
+    : `Modified on ${splitYear[2]} ${months[parseInt(splitYear[1]) - 1]} ${
         splitYear[0]
-      } à ${splitTime[0]}h ${splitTime[1]}mn`;
+      } at ${splitTime[0]}h ${splitTime[1]}mn`;
 };
 
 module.exports = {

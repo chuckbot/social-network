@@ -1,27 +1,27 @@
 <template>
   <div id="app" class="main ctn">
     <div v-if="isLoggedIn" class="ctn--main-view">
-      <Nav></Nav>
+      <NavBar></NavBar>
       <router-view></router-view>
     </div>
     <div v-else class="ctn--sign">
-      <Signin v-if="signin"></Signin>
-      <Signup v-else></Signup>
+      <SignIn v-if="signin"></SignIn>
+      <SignUp v-else></SignUp>
     </div>
   </div>
 </template>
 
 <script>
-import Signin from "./views/Signin.vue";
-import Signup from "./views/Signup.vue";
-import Nav from "./components/Nav.vue";
+import SignIn from "./views/Signin.vue";
+import SignUp from "./views/Signup.vue";
+import NavBar from "./components/Nav.vue";
 export default {
   name: "App",
   el: "#app",
   components: {
-    Signin,
-    Signup,
-    Nav,
+    SignIn,
+    SignUp,
+    NavBar,
   },
   beforeCreate() {},
   data() {

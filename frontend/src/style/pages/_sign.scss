@@ -1,0 +1,37 @@
+.sign {
+    width: 80vw;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.8rem 0.1rem $b;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem 0 1rem 0;
+    h1 {
+      width: 90%;
+      padding: 1rem 0 1rem 0;
+    }
+    p {
+      width: 90%;
+      margin: auto;
+      padding: 1rem 0 1rem 0;
+    }
+    #formsignin {
+      width: 90%;
+    }
+    #formsignup {
+      width: 90%;
+    }
+    @media screen and (min-width: $bp_tablet) {
+      width: 60vw;
+    }
+    @media screen and (min-width: $bp_laptop) {
+      width: 50vw;
+    }
+    @media screen and (min-width: $bp_laptop_large) {
+      width: 40vw;
+    }
+    @media screen and (min-width: $bp_big_screen) {
+      width: 25vw;
+    }
+  }

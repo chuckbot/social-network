@@ -5,7 +5,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "Date",
+  name: "DateCom",
   el: "#date",
   props: {
     id: {
