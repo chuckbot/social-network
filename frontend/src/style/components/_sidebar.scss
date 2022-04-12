@@ -1,0 +1,11 @@
+.sidebar {
+  ul li {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    list-style-type: none;
+    a:focus {
+      text-decoration: underline $p_darker 2px solid;
+    }
+  }
+  margin-bottom: 0.5rem;
+}

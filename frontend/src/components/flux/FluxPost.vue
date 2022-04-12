@@ -1,5 +1,5 @@
 <template>
-  <div id="flux-post">
+  <section id="flux-post" class="flux-post ctn ctn--column">
     <CardPost
       v-for="post in posts"
       :key="post.id"
@@ -13,10 +13,13 @@
       "
       :creatorLastName="post.Profile ? post.Profile.lastName : get_local_profile.lastName"
       :creatorImgUrl="
-        post.Profile ? post.Profile.profilPictureURL : get_local_profile.profilPictureURL
+        post.Profile
+          ? post.Profile.profilePictureURL
+          : get_local_profile.profilePictureURL
       "
+      :nbOfCom="get_nb_of_com(post.id)"
     ></CardPost>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -28,12 +31,13 @@ export default {
   components: {
     CardPost,
   },
-  beforeCreate() {
-    this.$store.dispatch("commit_local_posts");
-    this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
-  },
+  // beforeCreate() {
+  //   this.$store.dispatch("commit_local_posts");
+  //   this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
+  // },
+  props: {},
   computed: {
-    ...mapGetters(["get_local_posts", "get_local_profile"]),
+    ...mapGetters(["get_local_posts", "get_local_profile", "get_nb_of_com"]),
     posts() {
       return this.$route.name === "home"
         ? this.get_local_posts

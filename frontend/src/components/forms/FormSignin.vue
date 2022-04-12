@@ -1,8 +1,20 @@
 <template>
   <div id="formsignin">
-    <form @submit.prevent="logIn()" @input="submitValidation()">
-      <div>
-        <label for="email">E-mail :</label>
+    <p
+      v-if="error.invalidCredentials"
+      class="text--small-f text--normal-w text--error text--center"
+    >
+      {{ label.invalidCredentials }}
+    </p>
+    <form
+      @submit.prevent="logIn()"
+      @input="submitValidation()"
+      class="ctn ctn--column form"
+    >
+      <div class="ctn--input">
+        <label for="email" class="text--label text--normal-f text--normal-w box"
+          >E-mail</label
+        >
         <input
           type="email"
           id="email"
@@ -11,12 +23,20 @@
           required
           v-model="form.email"
           @input="emailValidation()"
-          placeholder="exemple@mail.com"
+          placeholder="exemple@groupomania.fr"
+          class="input input--sign box text--normal-f text--light-w"
         />
-        <span v-if="validator.email">Invalid email.</span>
       </div>
-      <div>
-        <label for="password">Password:</label>
+      <p
+        v-if="validator.email"
+        class="text--normal-f text--bold-w text--error text--center"
+      >
+        Invalid email.
+      </p>
+      <div class="ctn--input">
+        <label for="password" class="text--label text--normal-f text--normal-w box"
+          >Password</label
+        >
         <input
           type="password"
           id="password"
@@ -24,18 +44,19 @@
           autocomplete="new-password"
           required
           v-model="form.password"
+          class="input box text--normal-f text--light-w"
         />
       </div>
-      <SubmitButton :label="label.submit" :disabled="disableSubmit" />
+      <SubmitButton :label="label.submit" :disabled="disableSubmit" class="ctn" />
     </form>
   </div>
 </template>
 
 <script>
+// import trimAll from "../../scripts/triming"
 import SubmitButton from "../buttons/SubmitButton.vue";
 import { mapActions } from "vuex";
 import { validateEmail, validateForm } from "../../scripts/validate";
-
 export default {
   name: "FormSignin",
   el: "#formsignin",
@@ -45,7 +66,8 @@ export default {
   data() {
     return {
       label: {
-        submit: "Connexion",
+        submit: "Connection",
+        invalidCredentials: "Incorrect password or email.",
       },
       form: {
         email: "",
@@ -53,6 +75,9 @@ export default {
       },
       validator: {
         email: false,
+      },
+      error: {
+        invalidCredentials: false,
       },
       disableSubmit: true,
     };
@@ -67,7 +92,11 @@ export default {
     },
     ...mapActions(["sign_in"]),
     logIn() {
-      this.sign_in(this.form);
+      this.sign_in(this.form).then((res) => {
+        !res
+          ? (this.error.invalidCredentials = true)
+          : (this.error.invalidCredentials = false);
+      });
     },
   },
 };

@@ -1,0 +1,12 @@
+.error {
+  text-align: center;
+  &--signup {
+    position: absolute;
+    width: 72%;
+    padding: 1rem;
+    left: 14%;
+    top: 23%;
+    border: 2px solid $p_darker;
+    background-color: $p-lighter;
+  }
+}

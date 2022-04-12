@@ -1,12 +1,11 @@
 <template>
-  <div id="profiles">
+  <section id="profiles">
     <FluxProfiles></FluxProfiles>
-  </div>
+  </section>
 </template>
 
 <script>
 import FluxProfiles from "../components/flux/FluxProfiles.vue";
-
 export default {
   name: "Profiles",
   el: "#profiles",

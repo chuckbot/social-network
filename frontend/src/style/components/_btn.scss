@@ -1,0 +1,18 @@
+.btn {
+  background: linear-gradient(to bottom right, $b_dark, 90%, $p_darker);
+  border: none;
+  border-radius: 9999em;
+  padding: 0.75rem;
+  &:hover {
+  }
+  &--bg_w {
+    background: white;
+  }
+  &--modify-delete {
+    span {
+      position: relative;
+      top: -0.25rem;
+      left: 0.25rem;
+    }
+  }
+}

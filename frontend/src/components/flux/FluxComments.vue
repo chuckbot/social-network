@@ -1,33 +1,48 @@
 <template>
-  <div id="flux-comments">
-    <CardCom
-      v-for="com in get_local_coms"
-      :key="com.id"
-      :com="{ text: com.text, id: com.id }"
-      :profile="{
-        id: com.Profile ? com.Profile.id : get_user_profile.id,
-        firstName: com.Profile ? com.Profile.firstName : get_user_profile.firstName,
-        lastName: com.Profile ? com.Profile.lastName : get_user_profile.lastName,
-        profileImg: com.Profile
-          ? com.Profile.profilPictureURL
-          : get_user_profile.profilPictureURL,
-      }"
-    ></CardCom>
-  </div>
+  <section id="flux-post" class="flux-post ctn ctn--column">
+    <CardPost
+      v-for="post in posts"
+      :key="post.id"
+      :title="post.title"
+      :content="post.text"
+      :imgUrl="post.postPictureURL"
+      :id="post.id"
+      :creatorId="post.Profile ? post.Profile.userId : get_local_profile.userId"
+      :creatorFirstName="
+        post.Profile ? post.Profile.firstName : get_local_profile.firstName
+      "
+      :creatorLastName="post.Profile ? post.Profile.lastName : get_local_profile.lastName"
+      :creatorImgUrl="
+        post.Profile
+          ? post.Profile.profilePictureURL
+          : get_local_profile.profilePictureURL
+      "
+      :nbOfCom="get_nb_of_com(post.id)"
+    ></CardPost>
+  </section>
 </template>
 
 <script>
-import CardCom from "../cards/CardCom.vue";
+import CardPost from "../cards/CardPost.vue";
 import { mapGetters } from "vuex";
 export default {
-  name: "FluxComments",
-  el: "flux-comments",
-  components: { CardCom },
-  beforeCreate() {
-    this.$store.dispatch("commit_local_coms", this.$route.params.postId);
+  name: "FluxPost",
+  el: "#flux-post",
+  components: {
+    CardPost,
   },
+  // beforeCreate() {
+  //   this.$store.dispatch("commit_local_posts");
+  //   this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
+  // },
+  props: {},
   computed: {
-    ...mapGetters(["get_local_coms", "get_user_profile"]),
+    ...mapGetters(["get_local_posts", "get_local_profile", "get_nb_of_com"]),
+    posts() {
+      return this.$route.name === "home"
+        ? this.get_local_posts
+        : this.get_local_profile.Posts;
+    },
   },
 };
 </script>

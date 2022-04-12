@@ -1,0 +1,47 @@
+.card-profile {
+  background-color: $p_lighter;
+  margin-bottom: 1rem;
+  width: 100%;
+  @media screen and (min-width: $bp_tablet) {
+    max-width: 80%;
+    border: solid $p_darker;
+    border-radius: 1rem;
+  }
+  @media screen and (min-width: $bp_laptop) {
+  }
+  @media screen and (min-width: $bp_laptop_large) {
+  }
+  @media screen and (min-width: $bp_big_screen) {
+  }
+  &__img-ctn {
+    padding: 0.5rem;
+    width: 6rem;
+    height: 6rem;
+    img {
+      border-radius: 100%;
+      width: 5rem;
+      height: 5rem;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &__infos-ctn {
+    padding: 1rem;
+    #name-ctn {
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+.cardProfilesView {
+  @media screen and (min-width: $bp_tablet) {
+  }
+  @media screen and (min-width: $bp_laptop) {
+    max-width: 35%;
+  }
+  @media screen and (min-width: $bp_laptop_large) {
+  }
+  @media screen and (min-width: $bp_big_screen) {
+    max-width: 10%;
+  }
+}

@@ -1,0 +1,30 @@
+.link {
+  text-decoration: none;
+  color: $b;
+  &--router {
+    display: none;
+    margin-left: 0.5rem;
+    @media screen and (min-width: $bp_tablet) {
+      display: inline-block;
+    }
+    @media screen and (min-width: $bp_laptop) {
+      margin-left: 1rem;
+    }
+    @media screen and (min-width: $bp_laptop_large) {
+    }
+    @media screen and (min-width: $bp_big_screen) {
+    }
+  }
+}
+
+.linkActive {
+  img {
+    filter: invert(46%) sepia(29%) saturate(2333%) hue-rotate(313deg)
+      brightness(88%) contrast(98%);
+  }
+  color: $p_darker;
+}
+
+.activeProfileLink {
+  text-decoration: underline $p_darker 2px solid;
+}

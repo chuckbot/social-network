@@ -1,0 +1,17 @@
+.nav {
+  padding: 0.25rem;
+  border-bottom: 2px solid $b_lighter;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  background-color: $p_light;
+  @media screen and (min-width: $bp_tablet) {
+    padding: 0.25rem 1rem 0.25rem 1rem;
+  }
+  @media screen and (min-width: $bp_laptop) {
+  }
+  @media screen and (min-width: $bp_laptop_large) {
+  }
+  @media screen and (min-width: $bp_big_screen) {
+  }
+}

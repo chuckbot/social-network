@@ -1,6 +1,12 @@
 <template>
   <div id="cancel-button">
-    <button type="button" @click="$emit('cancel')">{{ label }}</button>
+    <button
+      type="button"
+      @click="$emit('cancel')"
+      class="btn text--btn text--center text--normal-w text--normal-f"
+    >
+      {{ label }}
+    </button>
   </div>
 </template>
 

@@ -1,9 +1,8 @@
 const bcrypt = require("bcrypt");
-const session = require("express-session");
-const jwt = require("jsonwebtoken");
+require("express-session");
+const { decodeToken, createToken } = require("../scripts/token");
 
 const db = require("../models/index");
-const user = require("../models/user");
 
 // Create new user and his empty profile:
 exports.signup = (req, res, next) => {
@@ -23,20 +22,18 @@ exports.signup = (req, res, next) => {
       });
       return user;
     })
-    .then((user) =>
-      res
-        .status(201)
-        .json({ message: "User and his profil created.", userId: user.id })
+    .then(() =>
+      res.status(201).json({
+        message: "User and his profil created.",
+      })
     )
     .catch((error) => res.status(400).json({ message: error }));
 };
+
 // Connect user:
 exports.signin = (req, res, next) => {
   db.User.findOne({ where: { email: req.body.email } })
     .then((user) => {
-      if (!user) {
-        return res.status(403).json({ error });
-      }
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
@@ -45,14 +42,18 @@ exports.signin = (req, res, next) => {
           }
           // Creating cookie
           req.session.user = user.id;
-          res.status(200).json({
+          // Creating Token
+          const token = createToken({
             userId: user.id,
+            isModerator: user.isModerator,
           });
+          res.status(200).json({ userId: user.id, token });
         })
         .catch((error) => res.status(500).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(404).json(error));
 };
+
 // Get a userId:
 exports.getUser = (req, res, next) => {
   if (req.session) {
@@ -61,6 +62,7 @@ exports.getUser = (req, res, next) => {
     res.status(200).json({ message: "Cookie not present." });
   }
 };
+
 // Logout :
 exports.logout = (req, res, next) => {
   if (req.session) {
@@ -78,13 +80,14 @@ exports.logout = (req, res, next) => {
 
 // Password change:
 exports.changePassword = (req, res, next) => {
-  db.User.findOne({ where: { userId: req.params.id } })
+  const isModerator = decodeToken(req).isModerator;
+  db.User.findOne({ where: { id: req.session.user } })
     .then((user) => {
-      if (req.session.user === user.id || user.isModerator) {
+      if (req.params.id === user.id || isModerator) {
         bcrypt
           .hash(req.body.password, 10)
           .then((hash) => {
-            db.User.update({ where: { id: req.params.id } }, { password: hash })
+            db.User.update({ password: hash }, { where: { id: req.params.id } })
               .then(() => {
                 res.status(201).json({ message: "Password changed." });
               })
@@ -93,7 +96,7 @@ exports.changePassword = (req, res, next) => {
               });
           })
           .catch((error) => {
-            res.status(400).json(error);
+            res.status(400).json({ message: error });
           });
       } else {
         res.status(401).json({ message: "Unauthaurized access." });
@@ -106,9 +109,10 @@ exports.changePassword = (req, res, next) => {
 
 // Deleting a user:
 exports.destroyUser = (req, res, next) => {
-  db.User.findOne({ where: { id: req.params.id } })
+  const isModerator = decodeToken(req).isModerator;
+  db.User.findOne({ where: { id: req.session.user } })
     .then((user) => {
-      if (req.session.user === req.params.id || user.isModerator) {
+      if (req.session.user === user.id || isModerator) {
         db.User.destroy({ where: { id: req.params.id } })
           .then(() => {
             res.status(201).json({ message: "User destroyed." });

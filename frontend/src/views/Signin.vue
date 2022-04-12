@@ -1,11 +1,14 @@
 <template>
-  <div id="signin">
-    <h1>Connexion</h1>
-    <p>Description</p>
+  <div id="signin" class="bg--white sign">
+    <h1 class="title--main text--center">Sign in</h1>
+    <p class="text--normal-w text--center text--small-f">
+      Already registered on Teleperformance?<br />
+      Connect to your favorite social network!
+    </p>
     <FormSignin></FormSignin>
-    <p>
+    <p class="text--normal-w text--small-f text--center">
       Not registered yet?
-      <a href @click.prevent="changeSignView()">Sign up!</a>
+      <a href="" @click.prevent="changeSignView()">Sign up!</a>
     </p>
   </div>
 </template>
@@ -25,3 +28,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss"></style>

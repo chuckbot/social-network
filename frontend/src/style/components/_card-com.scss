@@ -1,0 +1,35 @@
+.card-com {
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border-top: solid $p_darker 0.25rem;
+  &__controllers {
+    position: relative;
+    top: 1rem;
+    height: 2.5rem;
+  }
+  &__creator-infos {
+    margin-top: 0.5rem;
+    img {
+      border-radius: 100%;
+    }
+    span {
+      position: relative;
+      top: -1.5rem;
+      left: 0.25rem;
+    }
+  }
+  &__date {
+    position: relative;
+    top: -1.5rem;
+    left: 2.75rem;
+  }
+  &__com {
+    background-color: $p_light;
+    p {
+      padding: 0.5rem;
+    }
+  }
+}
+
+.changingCom {
+  margin-top: 1rem;
+}

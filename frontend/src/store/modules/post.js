@@ -28,6 +28,20 @@ const getters = {
     };
     return formatDate(dates);
   },
+  get_nb_of_com: (state) => (postId) => {
+    return state.posts.find((post) => post.id === postId).Comments
+      ? state.posts.find((post) => post.id === postId).Comments.length
+      : "0";
+  },
+  get_com_post_from_user: (state) => (profileId) => {
+    const posts = [];
+    for (const post of state.posts) {
+      if (post.Comments.find((com) => com.profileId === profileId)) {
+        posts.push(post);
+      }
+    }
+    return posts;
+  },
 };
 const mutations = {
   set_local_posts(state, posts) {
@@ -95,7 +109,6 @@ const actions = {
     formData.append("type", postObj.form.type);
     formData.append("text", postObj.form.text);
     formData.append("isImportant", postObj.form.isImportant);
-    console.log(formData);
     if (postObj.route.name === "create-post") {
       axios
         .post("/posts", formData)
@@ -129,6 +142,7 @@ const actions = {
       });
   },
 };
+
 export default {
   state,
   getters,

@@ -1,0 +1,25 @@
+.input {
+  border: none;
+  border-bottom: 2px solid #091f43;
+  height: 2rem;
+  padding: 0 5px 0 5px;
+  font-family: Inter;
+}
+
+.input-file {
+  display: none;
+}
+
+.select {
+  width: 60%;
+  border: $b solid 2px;
+}
+
+.textarea {
+  resize: none;
+  width: 100%;
+  height: 100%;
+  border: $b solid 2px;
+  padding: 0.2rem;
+  font-family: Inter;
+}

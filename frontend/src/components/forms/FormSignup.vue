@@ -1,8 +1,14 @@
 <template>
   <div id="formsignup">
-    <form @submit.prevent="signup()" @input="submitValidation()">
-      <div>
-        <label for="email">Email:</label>
+    <form
+      @submit.prevent="signup()"
+      @input="submitValidation()"
+      class="ctn ctn--column form"
+    >
+      <div class="ctn--input">
+        <label for="email" class="text--label text--normal-f text--normal-w box"
+          >Email</label
+        >
         <input
           type="email"
           id="email"
@@ -10,15 +16,21 @@
           autocomplete="email"
           required
           v-model="form.email"
-          @input="emailValidation()"
-          placeholder="exemple@mail.com"
+          @change="emailValidation()"
+          placeholder="exemple@groupomania.fr"
+          class="input input--sign box text--normal-f text--light-w"
         />
-        <span v-if="validator.email"
-          >Invalid email, must be of the form: exemple@mail.com</span
-        >
       </div>
-      <div>
-        <label for="password">Password:</label>
+      <p
+        v-if="validator.email"
+        class="text--normal-f text--bold-w text--error text--center"
+      >
+        Invalid email, must be of the form: exemple@teleperformance.com.
+      </p>
+      <div class="ctn--input">
+        <label for="password" class="text--label text--normal-f text--normal-w box"
+          >Password</label
+        >
         <input
           type="password"
           id="password"
@@ -26,15 +38,21 @@
           autocomplete="new-password"
           required
           v-model="form.password"
-          @input="passwordValidation()"
+          @change="passwordValidation()"
+          class="input input--sign box text--normal-f text--light-w"
         />
-        <span v-if="validator.password">
-          Invalid password, must contain at least 1 capital letter, a miniscule, a number,
-          a special character and between 8 and 16 characters.
-        </span>
       </div>
-      <div>
-        <label for="passwordConf">Confirm your password:</label>
+      <p
+        v-if="validator.password"
+        class="text--normal-f text--bold-w text--error text--center"
+      >
+        Invalid password, must contain at least 1 capital letter, a miniscule, a number, a
+        special character and between 8 and 16 characters.
+      </p>
+      <div class="ctn--input">
+        <label for="passwordConf" class="text--label text--normal-f text--normal-w box"
+          >Confirmation</label
+        >
         <input
           type="password"
           id="passwordConf"
@@ -43,8 +61,15 @@
           required
           v-model="form.passwordConf"
           @input="passwordConfValidation()"
+          class="input input--sign box text--normal-f text--light-w"
         />
       </div>
+      <p
+        v-if="validator.passwordConf"
+        class="text--normal-f text--bold-w text--error text--center"
+      >
+        Different passwords.
+      </p>
       <SubmitButton :label="label.submit" :disabled="disableSubmit" />
     </form>
   </div>
@@ -52,6 +77,7 @@
 
 <script>
 import SubmitButton from "../buttons/SubmitButton.vue";
+// import trimAll from "../../scripts/triming";
 import { mapActions } from "vuex";
 import {
   validateEmail,
@@ -59,7 +85,6 @@ import {
   validatePasswordConf,
   validateForm,
 } from "../../scripts/validate";
-
 export default {
   name: "FormSignup",
   el: "#formsignup",
@@ -70,7 +95,7 @@ export default {
   data() {
     return {
       label: {
-        submit: "Inscription",
+        submit: "Registration",
       },
       form: {
         email: "",

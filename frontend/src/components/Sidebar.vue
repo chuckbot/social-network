@@ -1,11 +1,17 @@
 <template>
-  <div id="sidebar">
-    <ul>
+  <aside id="sidebar" class="sidebar">
+    <ul class="ctn--column">
       <li v-for="value in sidebar_items" :key="value">
-        <a href @click.prevent="value.method">{{ value.label }}</a>
+        <a
+          :class="{ activeProfileLink: value.isActive }"
+          class="link text--normal-w text--normal-f"
+          href=""
+          @click.prevent="value.method"
+          >{{ value.label }}</a
+        >
       </li>
     </ul>
-  </div>
+  </aside>
 </template>
 
 <script>
@@ -20,6 +26,11 @@ export default {
     sidebar_items: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    getActiveLink() {
+      return Object.values(this.links_status).findIndex((val) => val);
     },
   },
 };

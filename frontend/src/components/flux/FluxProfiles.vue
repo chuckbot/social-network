@@ -1,18 +1,17 @@
 <template>
-  <div id="flux-profiles">
+  <section id="flux-profiles" class="flux-profile">
     <CardProfile
       v-for="profile in get_local_profiles"
       :key="profile.id"
       :userId="profile.userId"
-      :profilePicURL="profile.profilPictureURL"
+      :profilePicURL="profile.profilePictureURL"
       :firstName="profile.firstName"
       :lastName="profile.lastName"
       :position="profile.position"
       :description="profile.description"
-      @send:id="goToProfile($event)"
-    >
-    </CardProfile>
-  </div>
+      @sendid="goToProfile($event)"
+    ></CardProfile>
+  </section>
 </template>
 
 <script>
@@ -28,14 +27,20 @@ export default {
     this.$store.dispatch("get_all_profiles");
   },
   computed: {
-    ...mapGetters(["get_local_profiles", "get_profile_id", "get_user_id"]),
+    ...mapGetters([
+      "get_local_profiles",
+      "get_profile_id",
+      "get_user_id",
+      "is_moderator",
+    ]),
   },
   methods: {
     goToProfile(id) {
       this.$store.dispatch("go_to_profile", {
         local_profile_id: this.get_profile_id,
         local_user_id: this.get_user_id,
-        target_id: id,
+        target_user_id: id,
+        isModerator: this.is_moderator,
       });
     },
   },

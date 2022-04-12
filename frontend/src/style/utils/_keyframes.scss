@@ -1,0 +1,8 @@
+@keyframes btn_background {
+  from {
+    background: linear-gradient(to bottom right, $b_dark, 90%, $p_darker);
+  }
+  to {
+    background: linear-gradient(to bottom right, $b_dark, 10%, $p_darker);
+  }
+}

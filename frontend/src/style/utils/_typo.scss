@@ -1,0 +1,55 @@
+.title {
+  &--main {
+    color: $b;
+    font-weight: 900;
+  }
+}
+
+.text {
+  &--smaller-f {
+    font-size: 0.6rem;
+  }
+  &--small-f {
+    font-size: 0.75rem;
+  }
+  &--normal-f {
+    font-size: 0.85rem;
+  }
+  &--large-f {
+    font-size: 1.2rem;
+  }
+  &--bold-w {
+    font-weight: 800;
+  }
+  &--normal-w {
+    font-weight: 600;
+  }
+  &--light-w {
+    font-weight: 500;
+  }
+  &--center {
+    text-align: center;
+  }
+  &--error {
+    color: $p_darker;
+  }
+  &--label {
+    color: $b;
+  }
+  &--btn {
+    color: $p_light;
+  }
+  &--black {
+    color: black;
+  }
+  &--light {
+    color: $b_light;
+  }
+  &--red-underline {
+    text-decoration: underline solid 2px $p_darker;
+  }
+  &--warning {
+    color: $p_darker;
+    font-size: 0.95rem;
+  }
+}

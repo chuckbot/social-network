@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: { name: "userId", allowNull: false },
       });
       Profile.hasMany(models.Post, {
-        foreignkey: { name: "profileId", as: "posts" },
+        foreignKey: { name: "profileId", as: "posts" },
       });
       Profile.hasMany(models.Comment, {
         foreignKey: { name: "profileId", as: "comments" },
@@ -29,8 +29,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
-      position: DataTypes.STRING,
-      description: DataTypes.STRING,
+      position: {
+        type: DataTypes.STRING,
+        defaultValue: "Works at Teleperformance",
+      },
+      description: { type: DataTypes.STRING, defaultValue: "✌️" },
+      profilePictureURL: {
+        type: DataTypes.STRING,
+        defaultValue:
+          "http://localhost:3000/images_default/profile_pic_placeholder.svg",
+      },
     },
     {
       sequelize,

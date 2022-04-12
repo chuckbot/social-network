@@ -1,0 +1,76 @@
+.card-post {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  margin: 0 0 1rem 0;
+  padding-top: 0.75rem;
+  @media screen and (min-width: $bp_tablet) {
+    width: 80%;
+  }
+  @media screen and (min-width: $bp_laptop) {
+    width: 60%;
+  }
+  @media screen and (min-width: $bp_laptop_large) {
+    width: 50%;
+  }
+  @media screen and (min-width: $bp_big_screen) {
+    width: 40%;
+  }
+  &__controllers {
+    position: relative;
+    top: -1rem;
+    @media screen and (min-width: $bp_tablet) {
+    }
+    @media screen and (min-width: $bp_laptop) {
+    }
+    @media screen and (min-width: $bp_laptop_large) {
+    }
+    @media screen and (min-width: $bp_big_screen) {
+    }
+  }
+  &__creator-infos {
+    .img {
+      margin: 0.5rem 0.5rem 0 0.5rem;
+
+      border-radius: 100%;
+    }
+    span {
+      position: relative;
+      top: -0.5rem;
+    }
+  }
+  .date-ctn {
+    position: relative;
+    max-width: 82%;
+    text-overflow: wrap;
+    top: -1.5rem;
+    left: 3.5rem;
+  }
+  &__post-infos {
+    padding: 0 0.5rem 0 0.5rem;
+    div p {
+      overflow: hidden;
+      text-overflow: clip;
+      word-wrap: break-word;
+      word-break: keep-all;
+    }
+    &__post-img-ctn {
+      position: relative;
+      width: 100%;
+      img {
+        width: 100%;
+        max-height: 30vh;
+        object-fit: cover;
+        object-position: center;
+        @media screen and (min-width: $bp_tablet) {
+        }
+        @media screen and (min-width: $bp_laptop) {
+        }
+        @media screen and (min-width: $bp_laptop_large) {
+        }
+        @media screen and (min-width: $bp_big_screen) {
+        }
+      }
+    }
+  }
+}

@@ -55,7 +55,7 @@ const validateDescription = (description) => {
  * @returns { Boolean }
  */
 const validateImage = (file) => {
-  const authTypes = ["image/png", "image/jpg", "image/jpeg"];
+  const authTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
   const maxSize = 5242880;
 
   return authTypes.find((type) => file.type === type) && file.size <= maxSize
@@ -84,10 +84,17 @@ const validateForm = (formValidators, form) => {
  * Check if profile form is valid.
  * @param { Object } formValidators
  * @param { Object } form
+ * @param { Boolean } profileStatus
  * @returns { Boolean }
  */
-const validateProfileForm = (formValidators, form) => {
+const validateProfileForm = (formValidators, form, profileStatus) => {
   if (
+    profileStatus &&
+    Object.values(formValidators).every((value) => value === false) &&
+    Object.values(form).find((value) => value !== "")
+  ) {
+    return false;
+  } else if (
     Object.values(formValidators).every((value) => value === false) &&
     form.firstName !== "" &&
     form.lastName !== ""

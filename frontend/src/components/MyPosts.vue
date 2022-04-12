@@ -1,5 +1,5 @@
 <template>
-  <div id="my-posts">
+  <section id="my-posts">
     <CardPost
       v-for="post in get_my_posts"
       :key="post.id"
@@ -7,12 +7,13 @@
       :title="post.title"
       :content="post.text"
       :imgUrl="post.postPictureURL"
-      :creatorId="post.profileId"
+      :creatorId="get_user_profile.userId"
       :creatorFirstName="get_user_profile.firstName"
       :creatorLastName="get_user_profile.lastName"
-      :creatorImgUrl="get_user_profile.profilPictureURL"
+      :creatorImgUrl="get_user_profile.profilePictureURL"
+      :nbOfCom="get_com_number_for_post(post.id)"
     ></CardPost>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -28,7 +29,7 @@ export default {
     this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
   },
   computed: {
-    ...mapGetters(["get_my_posts", "get_user_profile"]),
+    ...mapGetters(["get_my_posts", "get_user_profile", "get_com_number_for_post"]),
   },
   watch: {},
 };

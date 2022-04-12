@@ -1,24 +1,36 @@
 <template>
-  <div id="cardprofile">
-    <a href="" @click.prevent="$emit('send:id', this.userId)">
-      <div id="picture-ctn">
-        <img :src="profilePicURL" alt="Profile Picture" width="100" />
+  <figure
+    id="cardprofile"
+    class="card-profile"
+    :class="{ cardProfilesView: isProfilesView }"
+  >
+    <a
+      href=""
+      class="link text--normal-w text--normal-f ctn ctn--flex-start"
+      @click.prevent="$emit('sendid', this.userId)"
+    >
+      <div id="picture-ctn" class="card-profile__img-ctn">
+        <img :src="profilePicURL" alt="Profile Picture" />
       </div>
-      <div id="firstname-ctn">
-        <span id="firstName">{{ firstName }}</span>
-      </div>
-      <div id="lastname-ctn">
-        <span id="lastName">{{ lastName }}</span>
-      </div>
-      <div id="email-ctn" v-if="email">{{ email }}</div>
-      <div id="position-ctn">
-        <span id="position">{{ position }}</span>
-      </div>
-      <div id="description-ctn">
-        <span id="description">{{ description }}</span>
+      <div class="card-profile__infos-ctn ctn--column">
+        <div class="ctn ctn--flex-start">
+          <div class="text--bold-w text--normal-f text--red-underline">
+            <span id="firstName">{{ firstName + " " }}</span>
+            <span id="lastName">{{ lastName }}</span>
+          </div>
+        </div>
+        <div id="email-ctn" class="text--normal-w text--normal-f" v-if="email">
+          {{ email }}
+        </div>
+        <div id="position-ctn" class="text--light text--normal-f text--bold-w">
+          <p id="position">{{ position }}</p>
+        </div>
+        <div id="description-ctn" class="text--black text--small-f">
+          <p id="description">{{ description }}</p>
+        </div>
       </div>
     </a>
-  </div>
+  </figure>
 </template>
 
 <script>
@@ -44,7 +56,7 @@ export default {
     },
     position: {
       type: String,
-      default: "Works at TP",
+      default: "Works at Teleperformance",
     },
     description: {
       type: String,
@@ -54,6 +66,14 @@ export default {
       type: String,
     },
     computed: {},
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    isProfilesView() {
+      return this.$route.name === "profiles";
+    },
   },
 };
 </script>

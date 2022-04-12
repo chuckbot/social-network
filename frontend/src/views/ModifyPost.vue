@@ -12,6 +12,7 @@
 <script>
 import FormPost from "../components/forms/FormPost.vue";
 import { mapGetters } from "vuex";
+
 export default {
   name: "ModifyPost",
   el: "#modify-post",
@@ -19,9 +20,9 @@ export default {
     FormPost,
   },
   computed: {
-    ...mapGetters(["get_my_posts"]),
+    ...mapGetters(["get_local_posts"]),
     myPost() {
-      return this.get_my_posts.find((post) => post.id === this.$route.params.postId);
+      return this.get_local_posts.find((post) => post.id === this.$route.params.postId);
     },
   },
 };

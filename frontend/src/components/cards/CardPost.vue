@@ -1,40 +1,60 @@
 <template>
-  <div id="card-post" class="card-post">
-    <div id="controllers" v-if="creatorId === this.get_profile_id">
-      <ModifyButton :modifyThis="modifyPost"></ModifyButton>
-      <DeleteButton :deleteThis="deletePost"></DeleteButton>
+  <figure id="card-post" class="card-post ctn--column">
+    <div class="ctn ctn--space-between">
+      <div class="card-post__creator-infos">
+        <a href="" @click.prevent="goToProfile()" class="ctn ctn--flex-start link">
+          <div>
+            <img
+              :src="creatorImgUrl === null ? undefined : creatorImgUrl"
+              alt="Profil Picture"
+              class="img img--card_post_profile"
+            />
+          </div>
+          <div>
+            <span class="text--normal-w">{{
+              creatorFirstName + " " + creatorLastName
+            }}</span>
+          </div>
+        </a>
+      </div>
+      <div
+        id="controllers"
+        v-if="creatorId === get_user_id || is_moderator"
+        class="ctn ctn--flex-end card-post__controllers"
+      >
+        <ModifyButton :modifyThis="modifyPost"></ModifyButton>
+        <DeleteButton :deleteThis="deletePost"></DeleteButton>
+      </div>
     </div>
-    <Date :type="this.type" :id="this.postId"></Date>
-    <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
-      <a href="" @click.prevent="goToProfile()">
-        <div>
-          <img
-            :src="creatorImgUrl === null ? undefined : creatorImgUrl"
-            alt="Profil Picture"
-            width="100"
-          />
-        </div>
-        <div>
-          <span>{{ creatorFirstName }}</span>
-        </div>
-        <div>
-          <span>{{ creatorLastName }}</span>
-        </div>
-      </a>
-    </div>
+    <Date :type="this.type" :id="this.postId" class="date-ctn"></Date>
     <div class="card-post__post-infos">
-      <a href="" @click.prevent="goToPost()">
-        <div id="post-img-ctn">
-          <img :src="imgUrl" alt="" width="100" />
+      <a href="" @click.prevent="goToPost()" class="link">
+        <div
+          id="post-img-ctn"
+          v-if="this.imgUrl"
+          class="card-post__post-infos__post-img-ctn"
+        >
+          <img :src="imgUrl" alt="" />
         </div>
         <div>
-          <div id="title-post-ctn">{{ title }}</div>
-          <div id="content-post-ctn">{{ content }}</div>
-          <div id="comments-post-ctn">{{ nbOfCom }} feedback</div>
+          <div id="title-post-ctn" class="text--large-f text--normal-w">
+            <span>{{ title }}</span>
+          </div>
+          <div id="content-post-ctn" class="text--normal-f">
+            <p class="text--black">
+              {{ shortContent
+              }}<span v-if="readMore" class="text--normal-w text--label"
+                >... read more</span
+              >
+            </p>
+          </div>
+          <div id="comments-post-ctn" class="text--normal-f text--normal-w">
+            <span>{{ nbOfCom }} feedback</span>
+          </div>
         </div>
       </a>
     </div>
-  </div>
+  </figure>
 </template>
 
 <script>
@@ -82,7 +102,7 @@ export default {
     },
     imgUrl: {
       type: String,
-      default: "../../assets/user-solid.svg",
+      default: undefined,
     },
     nbOfCom: {
       type: Number,
@@ -95,8 +115,19 @@ export default {
       type: "POST",
     };
   },
-  compoted: {
-    ...mapGetters(["get_profile_id", "get_user_id"]),
+  computed: {
+    ...mapGetters([
+      "get_profile_id",
+      "get_user_id",
+      "is_moderator",
+      "get_com_number_for_post",
+    ]),
+    shortContent() {
+      return this.content.length > 50 ? `${this.content.slice(0, 200)}` : this.content;
+    },
+    readMore() {
+      return this.content.length > 50 ? true : false;
+    },
   },
   methods: {
     goToPost() {
@@ -106,10 +137,9 @@ export default {
       this.$store.dispatch("go_to_profile", {
         local_profile_id: this.get_profile_id,
         local_user_id: this.get_user_id,
-        target_id: this.creatorId,
+        target_user_id: this.creatorId,
       });
     },
-    goToProfile() {},
     deletePost() {
       this.$store.dispatch("delete_my_post", this.postId);
       if (this.$route.name === "post") {
@@ -126,17 +156,3 @@ export default {
   },
 };
 </script>
-<style>
-.card-post {
-  border: 2px solid black;
-  margin-bottom: 2px;
-}
-
-.card-post__creator-infos {
-  border: 1px solid green;
-}
-
-.card-post__post-infos {
-  border: 1px solid red;
-}
-</style>

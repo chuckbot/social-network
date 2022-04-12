@@ -1,5 +1,5 @@
 <template>
-  <div id="date">{{ this.date }}</div>
+  <p id="date" class="date text--small-f text--normal-w">{{ this.date }}</p>
 </template>
 
 <script>
@@ -9,6 +9,7 @@ export default {
   el: "#date",
   props: {
     id: {
+      type: String,
       required: true,
     },
     type: {

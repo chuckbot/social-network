@@ -1,0 +1,14 @@
+.form-com {
+  padding: 0 1rem 1rem 1rem;
+  &__form {
+    border-top: solid 0.25rem $p_darker;
+    label,
+    textarea {
+      padding: 0.5rem;
+    }
+  }
+}
+
+.changeMyCom {
+  border: none;
+}

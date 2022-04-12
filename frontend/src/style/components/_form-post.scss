@@ -1,0 +1,36 @@
+.form-post {
+  margin: auto;
+  width: 100%;
+  min-height: 75vh;
+  @media screen and (min-width: $bp_tablet) {
+    width: 60%;
+  }
+  @media screen and (min-width: $bp_laptop) {
+    width: 40%;
+  }
+  @media screen and (min-width: $bp_laptop_large) {
+  }
+  @media screen and (min-width: $bp_big_screen) {
+  }
+  form {
+    div {
+      width: 80%;
+      margin: 1rem 0 1rem 0;
+    }
+  }
+  .input-wrap {
+    width: 80%;
+  }
+  .select-wrap {
+    width: 80%;
+  }
+  .textarea-wrap {
+    height: 25vh;
+  }
+  .img-preview {
+    width: 100%;
+    max-height: 30vh;
+    object-fit: cover;
+    object-position: center;
+  }
+}

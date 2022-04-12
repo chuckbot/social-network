@@ -1,9 +1,18 @@
 <template>
   <div id="form-pwd">
-    <form v-if="!success" @submit.prevent="changePwd()" @input="submitValidation()">
-      <div>
-        <label for="oldPassword">Ancien mot de passe :</label>
+    <form
+      class="ctn ctn--column ctn--space-between"
+      v-if="!success"
+      @submit.prevent="changePwd()"
+      @input="submitValidation()"
+    >
+      <div
+        v-if="!isAdminRoute"
+        class="text--normal-f text--normal-w text--label ctn--column input-wrap"
+      >
+        <label for="oldPassword">Old password</label>
         <input
+          class="input text--normal-f text--light-w"
           type="password"
           id="oldPassword"
           name="oldPassword"
@@ -12,9 +21,10 @@
           v-model="form.oldPassword"
         />
       </div>
-      <div>
-        <label for="password">Nouveau mot de passe :</label>
+      <div class="text--normal-f text--normal-w text--label ctn--column input-wrap">
+        <label for="password">New password</label>
         <input
+          class="input text--normal-f text--light-w"
           type="password"
           id="password"
           name="password"
@@ -23,14 +33,18 @@
           v-model="form.password"
           @input="passwordValidation()"
         />
-        <span v-if="validator.password">
-          Mot de passe invalide, doit contenir au moins 1 lettre majuscule, une miniscule,
-          un chiffre, un caractère spécial et entre 8 et 16 caractères.
-        </span>
       </div>
-      <div>
-        <label for="passwordConf">Confirmez votre mot de passe :</label>
+      <p
+        v-if="validator.password"
+        class="text--center text--error text--small-f text--bold-w"
+      >
+        Invalid password, must contain at least 1 capital letter, one miniscule, a number,
+        a special character and between 8 and 16 characters.
+      </p>
+      <div class="text--normal-f text--normal-w text--label ctn--column input-wrap">
+        <label for="passwordConf">Confirm your password</label>
         <input
+          class="input text--normal-f text--light-w"
           type="password"
           id="passwordConf"
           name="passwordConf"
@@ -39,15 +53,23 @@
           v-model="form.passwordConf"
           @input="passwordConfValidation()"
         />
-        <span v-if="validator.passwordConf">Mots de passe différents.</span>
       </div>
+      <p
+        v-if="validator.passwordConf"
+        class="text--center text--error text--small-f text--bold-w"
+      >
+        Different passwords.
+      </p>
       <SubmitButton :label="label.submit" :disabled="disableSubmit" />
     </form>
-    <p v-else>Mot de passe modifié avec succès !</p>
+    <p v-else class="text--center text--normal-f text--bold-w">
+      Password changed successfully!
+    </p>
   </div>
 </template>
 
 <script>
+// import trimAll from "../../scripts/triming"
 import {
   validatePassword,
   validatePasswordConf,
@@ -55,7 +77,6 @@ import {
 } from "../../scripts/validate";
 import SubmitButton from "../buttons/SubmitButton.vue";
 import { mapActions } from "vuex";
-
 export default {
   name: "FormPwd",
   el: "#form-pwd",
@@ -65,7 +86,7 @@ export default {
   data() {
     return {
       label: {
-        submit: "Changer le mot de passe",
+        submit: "Change password",
       },
       form: {
         oldPassword: "",
@@ -80,6 +101,11 @@ export default {
       success: false,
     };
   },
+  computed: {
+    isAdminRoute() {
+      return this.$route.name === "moderate-profile" ? true : false;
+    },
+  },
   methods: {
     passwordValidation() {
       this.validator.password = validatePassword(this.form.password);
@@ -91,7 +117,14 @@ export default {
       );
     },
     submitValidation() {
-      this.disableSubmit = validateForm(this.validator, this.form);
+      if (this.$store.getters.is_moderator) {
+        this.disableSubmit = validateForm(this.validator, {
+          password: this.password,
+          passwordConf: this.passwordConf,
+        });
+      } else {
+        this.disableSubmit = validateForm(this.validator, this.form);
+      }
     },
     ...mapActions(["change_pwd"]),
     changePwd() {

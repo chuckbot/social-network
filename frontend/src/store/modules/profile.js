@@ -17,6 +17,13 @@ const getters = {
   get_local_profiles(state) {
     return state.local_profiles;
   },
+  get_one_local_profile: (state) => (userId) => {
+    return state.local_profiles.find((profile) => profile.userId === userId);
+  },
+  get_userId_from_profileId: (state) => (profileId) => {
+    return state.local_profiles.find((profile) => profile.id === profileId)
+      .userId;
+  },
 };
 
 const mutations = {
@@ -28,6 +35,18 @@ const mutations = {
   },
   set_local_profiles(state, profiles) {
     state.local_profiles = profiles;
+  },
+  remove_local_profile(state, userId) {
+    state.local_profile = null;
+    state.local_profiles = state.local_profiles.filter(
+      (profile) => profile.userId === userId
+    );
+  },
+  set_one_local_profile(state, profile) {
+    const profileIndex = state.local_profiles.findIndex(
+      (p) => p.id === profile.id
+    );
+    state.local_profiles[profileIndex] = profile;
   },
 };
 
@@ -54,9 +73,13 @@ const actions = {
         axios
           .get(`users/${data.userId}`)
           .then((res) => {
-            commit("set_user_profile", res.data);
-            dispatch("change_profile_status", true);
-            commit("set_update_status");
+            if (router.currentRoute.value.name === "moderate-profile") {
+              commit("set_one_local_profile", res.data);
+            } else {
+              commit("set_user_profile", res.data);
+              dispatch("change_profile_status", true);
+              commit("set_update_status");
+            }
           })
           .catch((error) => {
             console.log(error.toJSON());
@@ -86,16 +109,24 @@ const actions = {
         console.log(error);
       });
   },
-  go_to_profile({ dispatch }, idObj) {
-    if (idObj.local_user_id === idObj.target_id) {
-      router.push({
-        name: "my-profile",
-        params: { userId: idObj.local_user_id },
-      });
+  go_to_profile({ getters, dispatch }, idObj) {
+    const target_user_id = idObj.target_user_id
+      ? idObj.target_user_id
+      : getters.get_userId_from_profileId(idObj.target_id);
+    if (idObj.local_user_id === target_user_id || idObj.isModerator) {
+      idObj.isModerator
+        ? router.push({
+            name: "moderate-profile",
+            params: { userId: idObj.target_user_id },
+          })
+        : router.push({
+            name: "my-profile",
+            params: { userId: idObj.local_user_id },
+          });
     } else {
-      dispatch("get_one_profile", idObj.target_id)
+      dispatch("get_one_profile", target_user_id)
         .then(() => {
-          router.push({ name: "profile", params: { userId: idObj.target_id } });
+          router.push({ name: "profile", params: { userId: target_user_id } });
         })
         .catch((error) => {
           console.log(error);

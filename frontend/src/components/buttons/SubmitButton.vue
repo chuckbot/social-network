@@ -1,6 +1,11 @@
 <template>
-  <div id="submitbutton">
-    <input type="submit" :value="label" :disabled="disabled" />
+  <div id="submitbutton" class="ctn--btn">
+    <input
+      type="submit"
+      :value="label"
+      :disabled="disabled"
+      class="btn text--btn text--center text--normal-w text--normal-f"
+    />
   </div>
 </template>
 

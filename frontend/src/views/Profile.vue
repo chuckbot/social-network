@@ -1,11 +1,12 @@
 <template>
-  <div id="profile">
+  <section id="profile" class="ctn ctn--column profile">
     <CardProfile
+      class="profile__card-profile"
       :userId="get_local_profile.userId"
       :profilePicURL="
-        get_local_profile.profilPictureURL === null
+        get_local_profile.profilePictureURL === null
           ? undefined
-          : get_local_profile.profilPictureURL
+          : get_local_profile.profilePictureURL
       "
       :firstName="get_local_profile.firstName"
       :lastName="get_local_profile.lastName"
@@ -13,8 +14,9 @@
       :position="get_local_profile.position"
       :description="get_local_profile.description"
     ></CardProfile>
+    <h1 class="text--large-f text--bold-w text--label text--center">Publications</h1>
     <FluxPost></FluxPost>
-  </div>
+  </section>
 </template>
 
 <script>
