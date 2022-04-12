@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       lastName: DataTypes.STRING,
       position: {
         type: DataTypes.STRING,
-        defaultValue: "Works at Teleperformance",
+        defaultValue: "Works at Groupomania",
       },
       description: { type: DataTypes.STRING, defaultValue: "✌️" },
       profilePictureURL: {

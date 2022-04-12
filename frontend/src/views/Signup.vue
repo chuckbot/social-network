@@ -2,7 +2,7 @@
   <div id="signup" class="bg--white sign">
     <h1 class="title--main text--center">S'inscrire</h1>
     <p class="text--normal-w text--center text--small-f">
-      Join hundreds of teleperformers on your company's social network!
+      Join hundreds of Groupomaniacs on your company's social network!
     </p>
     <FormSignup></FormSignup>
     <p class="text--normal-w text--small-f text--center">

@@ -1,14 +1,7 @@
 <template>
-  <figure
-    id="cardprofile"
-    class="card-profile"
-    :class="{ cardProfilesView: isProfilesView }"
-  >
-    <a
-      href=""
-      class="link text--normal-w text--normal-f ctn ctn--flex-start"
-      @click.prevent="$emit('sendid', this.userId)"
-    >
+  <figure id="cardprofile" class="card-profile" :class="{ cardProfilesView: isProfilesView }">
+    <a href="" class="link text--normal-w text--normal-f ctn ctn--flex-start"
+      @click.prevent="$emit('sendid', this.userId)">
       <div id="picture-ctn" class="card-profile__img-ctn">
         <img :src="profilePicURL" alt="Profile Picture" />
       </div>
@@ -56,7 +49,7 @@ export default {
     },
     position: {
       type: String,
-      default: "Works at Teleperformance",
+      default: "Works at Groupomania",
     },
     description: {
       type: String,

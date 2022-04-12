@@ -2,7 +2,7 @@
   <div id="signin" class="bg--white sign">
     <h1 class="title--main text--center">Sign in</h1>
     <p class="text--normal-w text--center text--small-f">
-      Already registered on Teleperformance?<br />
+      Already registered on Groupomania?<br />
       Connect to your favorite social network!
     </p>
     <FormSignin></FormSignin>
@@ -29,4 +29,5 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>
