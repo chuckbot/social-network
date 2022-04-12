@@ -86,14 +86,20 @@ const actions = {
         console.log(error);
       });
   },
-  go_to_profile(state, idObj) {
-    if (idObj.local_profile_id === idObj.target_id) {
+  go_to_profile({ dispatch }, idObj) {
+    if (idObj.local_user_id === idObj.target_id) {
       router.push({
         name: "my-profile",
         params: { userId: idObj.local_user_id },
       });
     } else {
-      router.push({ name: "profile", params: { profileId: idObj.target_id } });
+      dispatch("get_one_profile", idObj.target_id)
+        .then(() => {
+          router.push({ name: "profile", params: { userId: idObj.target_id } });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   },
 };

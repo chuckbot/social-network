@@ -3,7 +3,7 @@
     <CardProfile
       v-for="profile in get_local_profiles"
       :key="profile.id"
-      :id="profile.id"
+      :userId="profile.userId"
       :profilePicURL="profile.profilPictureURL"
       :firstName="profile.firstName"
       :lastName="profile.lastName"

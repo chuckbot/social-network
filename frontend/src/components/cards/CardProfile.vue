@@ -1,6 +1,6 @@
 <template>
   <div id="cardprofile">
-    <a href="" @click.prevent="$emit('send:id', this.id)">
+    <a href="" @click.prevent="$emit('send:id', this.userId)">
       <div id="picture-ctn">
         <img :src="profilePicURL" alt="Profile Picture" width="100" />
       </div>
@@ -10,6 +10,7 @@
       <div id="lastname-ctn">
         <span id="lastName">{{ lastName }}</span>
       </div>
+      <div id="email-ctn" v-if="email">{{ email }}</div>
       <div id="position-ctn">
         <span id="position">{{ position }}</span>
       </div>
@@ -25,7 +26,7 @@ export default {
   name: "CardProfile",
   el: "#cardprofile",
   props: {
-    id: {
+    userId: {
       type: String,
       required: true,
     },
@@ -48,6 +49,9 @@ export default {
     description: {
       type: String,
       default: "✌️",
+    },
+    email: {
+      type: String,
     },
     computed: {},
   },

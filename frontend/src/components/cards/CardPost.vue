@@ -7,7 +7,13 @@
     <Date :type="this.type" :id="this.postId"></Date>
     <div class="card-post__creator-infos" v-if="this.$route.name === 'home'">
       <a href="" @click.prevent="goToProfile()">
-        <div><img :src="creatorImgUrl" alt="Profile Picture" width="100" /></div>
+        <div>
+          <img
+            :src="creatorImgUrl === null ? undefined : creatorImgUrl"
+            alt="Profil Picture"
+            width="100"
+          />
+        </div>
         <div>
           <span>{{ creatorFirstName }}</span>
         </div>
@@ -63,7 +69,7 @@ export default {
     },
     creatorImgUrl: {
       type: String,
-      required: true,
+      default: "http://localhost:3000/images/user-solid.svg",
     },
     title: {
       type: String,

@@ -1,16 +1,20 @@
 <template>
   <div id="flux-post">
     <CardPost
-      v-for="post in get_local_posts"
+      v-for="post in posts"
       :key="post.id"
       :title="post.title"
       :content="post.text"
       :imgUrl="post.postPictureURL"
       :id="post.id"
-      :creatorId="post.profileId"
-      :creatorFirstName="post.Profile.firstName"
-      :creatorLastName="post.Profile.lastName"
-      :creatorImgUrl="post.Profile.profilPictureURL"
+      :creatorId="post.Profile ? post.Profile.userId : get_local_profile.userId"
+      :creatorFirstName="
+        post.Profile ? post.Profile.firstName : get_local_profile.firstName
+      "
+      :creatorLastName="post.Profile ? post.Profile.lastName : get_local_profile.lastName"
+      :creatorImgUrl="
+        post.Profile ? post.Profile.profilPictureURL : get_local_profile.profilPictureURL
+      "
     ></CardPost>
   </div>
 </template>
@@ -29,7 +33,12 @@ export default {
     this.$store.dispatch("commit_my_posts", this.$store.getters.get_profile_id);
   },
   computed: {
-    ...mapGetters(["get_local_posts"]),
+    ...mapGetters(["get_local_posts", "get_local_profile"]),
+    posts() {
+      return this.$route.name === "home"
+        ? this.get_local_posts
+        : this.get_local_profile.Posts;
+    },
   },
 };
 </script>
