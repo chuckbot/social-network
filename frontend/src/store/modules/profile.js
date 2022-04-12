@@ -13,6 +13,9 @@ const getters = {
   get_local_profile(state) {
     return state.local_profile;
   },
+  get_local_profiles(state) {
+    return state.local_profiles;
+  },
 };
 
 const mutations = {
@@ -21,6 +24,9 @@ const mutations = {
   },
   set_local_profile(state, profile) {
     state.local_profile = profile;
+  },
+  set_local_profiles(state, profiles) {
+    state.local_profiles = profiles;
   },
 };
 
@@ -64,6 +70,16 @@ const actions = {
       .get(`/users/${userId}`)
       .then((res) => {
         commit("set_local_profile", res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  get_all_profiles({ commit }) {
+    axios
+      .get(`/users`)
+      .then((res) => {
+        commit("set_local_profiles", res.data);
       })
       .catch((error) => {
         console.log(error);

@@ -3,7 +3,7 @@ const db = require("../models/index");
 exports.getAllProfile = (req, res, next) => {
   db.Profile.findAll()
     .then((profiles) => {
-      res.status(200).json({ profiles });
+      res.status(200).json(profiles);
     })
     .catch((error) => {
       res.status(404).json({ error });

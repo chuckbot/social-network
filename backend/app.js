@@ -24,25 +24,25 @@ app.use(helmet());
 app.use(session(sessionOptions));
 app.use(cors(corsOptions));
 
-// Configuration des headers :
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Request-Headers', '*');
-//   res.setHeader('Access-Control-Request-Method', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-//   res.setHeader(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, Accept-Encoding, Accept-Language, Content-Length'
-//   );
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   res.setHeader(
-//     'Access-Control-Allow-Methods',
-//     'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-//   );
-//   res.setHeader('Cross-Origin-Ressource-Policy', 'cross-origin');
-//   next();
-// });
+// Header configuration:
+app.use((req, res, next) => {
+  // res.setHeader('Access-Control-Request-Headers', '*');
+  // res.setHeader('Access-Control-Request-Method', 'GET, POST, PUT, DELETE');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader(
+  //   'Access-Control-Allow-Headers',
+  //   'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, Accept-Encoding, Accept-Language, Content-Length, Cross-Origin-Ressource-Policy'
+  // );
+  // res.setHeader('Access-Control-Allow-Credentials', false);
+  // res.setHeader(
+  //   'Access-Control-Allow-Methods',
+  //   'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+  // );
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+});
 
-// Création du dossier ./images s'il n'existe pas :
+// Creating the ./images folder if it does not exist:
 fs.access("./images", fs.constants.F_OK, (error) => {
   if (error) {
     fs.mkdir("./images", (error) => {
@@ -54,11 +54,11 @@ fs.access("./images", fs.constants.F_OK, (error) => {
     });
   }
 });
-// Chemin du dossier vers les images :
+// Folder path to images:
 app.use("/images", express.static(path.join(__dirname, "images")));
-// Import module auth :
+// Import module auth:
 const auth = require("./middleware/auth");
-// Routage
+// Routing
 app.use("/", userRoute);
 app.use("/users", auth, profilRoute);
 app.use("/posts", auth, postRoute);
