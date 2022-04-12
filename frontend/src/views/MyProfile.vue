@@ -2,25 +2,25 @@
   <div id="my-profile">
     <Sidebar :sidebar_items="this.sidebar_items"></Sidebar>
     <section id="change-profile" v-if="links.changeProfile || !get_profile_status">
-      <h3>Modification du profil</h3>
-      <FormProfile></FormProfile>
+      <h3>Editing profile</h3>
+      <FormProfile @profileupdated="goToProfil()"></FormProfile>
     </section>
     <section id="mes-infos" v-else-if="links.myInfos">
-      <h3>Mes informations</h3>
+      <h3>My information</h3>
       <ul>
         <li>Email : {{ get_user_email }}</li>
       </ul>
     </section>
     <section id="change-pwd" v-else-if="links.changePwd">
-      <h3>Modification du mot de passe</h3>
+      <h3>Changing the password</h3>
       <FormPwd></FormPwd>
     </section>
     <section id="posts" v-else-if="links.myPosts">
-      <h3>Mes publications</h3>
+      <h3>My publications</h3>
       <MyPosts></MyPosts>
     </section>
     <section id="profile" v-else>
-      <h3>Mon profil</h3>
+      <h3>My profile</h3>
       <CardProfile
         :profilePicURL="
           get_user_profile.profilPictureURL
@@ -58,27 +58,27 @@ export default {
     return {
       sidebar_items: {
         myProfile: {
-          label: "Mon profil",
+          label: "My profile",
           method: this.goToProfil,
         },
         myInfos: {
-          label: "Mes informations",
+          label: "My information",
           method: this.goToInfos,
         },
         myPosts: {
-          label: "Mes publications",
+          label: "My publications",
           method: this.goToMyPosts,
         },
         updateProfile: {
-          label: "Modifier mon profil",
+          label: "Edit my profile",
           method: this.goToUpdateProfile,
         },
         updatePwd: {
-          label: "Modifier mon mot de passe",
+          label: "Change my password",
           method: this.goToUpdatePwd,
         },
       },
-      backlink: "< Retour",
+      backlink: "< Return",
       links: {
         myProfile: true,
         changePwd: false,

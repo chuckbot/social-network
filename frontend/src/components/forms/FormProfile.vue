@@ -130,7 +130,13 @@ export default {
       this.update_profile({
         form: this.form,
         userId: this.$route.params.userId,
-      });
+      })
+        .then(() => {
+          this.$emit("profileupdated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
