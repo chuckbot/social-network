@@ -7,7 +7,7 @@
     <Date :type="this.type" :id="com.id"></Date>
     <a href="" @click.prevent="goToProfile()">
       <div>
-        <img :src="profile.profileImg" alt="Profile Picture" />
+        <img :src="profile.profileImg" alt="Profile Picture" width="100" />
         <span>{{ profile.firstName }}</span>
         <span> {{ profile.lastName }}</span>
       </div>

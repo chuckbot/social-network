@@ -1,7 +1,7 @@
 <template>
   <div id="cardprofile">
     <div id="picture-ctn">
-      <img :src="profilePicURL" alt="Profile Picture" />
+      <img :src="profilePicURL" alt="Profile Picture" width="100" />
     </div>
     <div id="firstname-ctn">
       <span id="firstName">{{ firstName }}</span>

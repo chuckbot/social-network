@@ -2,6 +2,7 @@
   <div id="nav">
     <router-link :to="pathToHome">News Feed </router-link>
     <router-link :to="pathToCreatePost">Create a Post</router-link>
+    <router-link :to="pathToProfiles">Teleperformers </router-link>
     <router-link :to="pathToProfile">My Profile</router-link>
     <router-link to="/" @click="logout()">Logout</router-link>
   </div>
@@ -18,6 +19,7 @@ export default {
         params: { userId: this.$store.getters.get_user_id },
       },
       pathToCreatePost: { name: "create-post" },
+      pathToProfiles: { name: "profiles" },
     };
   },
   computed: {},

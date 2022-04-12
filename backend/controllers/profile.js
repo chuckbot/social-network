@@ -1,17 +1,28 @@
 const db = require("../models/index");
+
 // Get all profile:
 exports.getAllProfile = (req, res, next) => {
-  db.Profile.findAll()
+  db.Profile.findAll({
+    order: [["firstName", "ASC"]],
+  })
     .then((profiles) => {
       res.status(200).json(profiles);
     })
     .catch((error) => {
-      res.status(404).json({ error });
+      res.status(404).json({ message: error });
     });
 };
 // Get a profile by userId:
 exports.getProfileById = (req, res, next) => {
-  db.Profile.findOne({ where: { userId: req.params.userId } })
+  db.Profile.findOne({
+    where: {
+      userId: req.params.userId,
+    },
+    include: [
+      { model: db.Post, separate: true, order: [["updatedAt", "DESC"]] },
+      { model: db.User, attributes: ["email"] },
+    ],
+  })
     .then((profile) => {
       res.status(200).json(profile);
     })
