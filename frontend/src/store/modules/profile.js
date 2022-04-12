@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../../router";
 
 const state = {
   updateProfile: false,
@@ -85,5 +86,16 @@ const actions = {
         console.log(error);
       });
   },
+  go_to_profile(state, idObj) {
+    if (idObj.local_profile_id === idObj.target_id) {
+      router.push({
+        name: "my-profile",
+        params: { userId: idObj.local_user_id },
+      });
+    } else {
+      router.push({ name: "profile", params: { profileId: idObj.target_id } });
+    }
+  },
 };
+
 export default { state, getters, mutations, actions };

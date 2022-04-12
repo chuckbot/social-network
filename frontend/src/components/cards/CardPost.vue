@@ -90,11 +90,18 @@ export default {
     };
   },
   compoted: {
-    ...mapGetters(["get_profile_id"]),
+    ...mapGetters(["get_profile_id", "get_user_id"]),
   },
   methods: {
     goToPost() {
       this.$router.push({ name: "post", params: { postId: this.postId } });
+    },
+    goToProfile() {
+      this.$store.dispatch("go_to_profile", {
+        local_profile_id: this.get_profile_id,
+        local_user_id: this.get_user_id,
+        target_id: this.creatorId,
+      });
     },
     goToProfile() {},
     deletePost() {

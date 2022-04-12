@@ -56,18 +56,13 @@ export default {
     ...mapGetters(["get_local_post", "get_local_coms"]),
   },
   methods: {
-    ...mapActions(["get_one_profile"]),
+    ...mapActions(["get_one_profile", "get_profile_id", "get_user_id"]),
     goToProfile() {
-      this.get_one_profile(this.get_local_post.Profile.userId)
-        .then(() => {
-          this.$router.push({
-            name: "profile",
-            params: { userId: this.get_local_post.Profile.userId },
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$store.dispatch("go_to_profile", {
+        local_profile_id: this.get_profile_id,
+        local_user_id: this.get_user_id,
+        target_id: this.get_local_post.profileId,
+      });
     },
   },
 };
